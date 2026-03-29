@@ -838,26 +838,26 @@ var BASE = [
 ];
 
 var data = JSON.parse(localStorage.getItem('sfg4')||'null') || BASE.map(d=>({...d}));
-const sv = () => localStorage.setItem('sfg4', JSON.stringify(data));
+var sv = () => localStorage.setItem('sfg4', JSON.stringify(data));
 
 // ─────────────────────────────────────────────────────
 // TIMELINE
 // ─────────────────────────────────────────────────────
-const MNS=[];
+var MNS=[];
 for(let y=2025;y<=2026;y++)for(let m=0;m<12;m++)
   MNS.push({y,m,key:`${y}-${String(m+1).padStart(2,'0')}`,lb:new Date(y,m,1).toLocaleString('en',{month:'short'})});
-const MW=88, TOD=new Date(), TODK=`${TOD.getFullYear()}-${String(TOD.getMonth()+1).padStart(2,'0')}`, TIDX=MNS.findIndex(m=>m.key===TODK);
+var MW=88, TOD=new Date(), TODK=`${TOD.getFullYear()}-${String(TOD.getMonth()+1).padStart(2,'0')}`, TIDX=MNS.findIndex(m=>m.key===TODK);
 
-const dx  = s=>{const d=new Date(s),i=MNS.findIndex(m=>m.y===d.getFullYear()&&m.m===d.getMonth());return i<0?0:(i+(d.getDate()-1)/new Date(d.getFullYear(),d.getMonth()+1,0).getDate())*MW;};
-const dxE = s=>{const d=new Date(s),i=MNS.findIndex(m=>m.y===d.getFullYear()&&m.m===d.getMonth());return i<0?0:(i+d.getDate()/new Date(d.getFullYear(),d.getMonth()+1,0).getDate())*MW;};
+var dx  = s=>{const d=new Date(s),i=MNS.findIndex(m=>m.y===d.getFullYear()&&m.m===d.getMonth());return i<0?0:(i+(d.getDate()-1)/new Date(d.getFullYear(),d.getMonth()+1,0).getDate())*MW;};
+var dxE = s=>{const d=new Date(s),i=MNS.findIndex(m=>m.y===d.getFullYear()&&m.m===d.getMonth());return i<0?0:(i+d.getDate()/new Date(d.getFullYear(),d.getMonth()+1,0).getDate())*MW;};
 
 // ─────────────────────────────────────────────────────
 // COLOURS
 // ─────────────────────────────────────────────────────
-const SC={'Not Started':'#94a3b8','In Progress':'#2563eb','On Track':'#059669','At Risk':'#d97706','Delayed':'#dc2626','Done':'#10b981','On Hold':'#6b7280'};
-const SI={'Not Started':'○','In Progress':'◉','On Track':'●','At Risk':'⚠','Delayed':'✕','Done':'✓','On Hold':'⏸'};
-const TC=fn=>({Demand:'#6366f1',Driver:'#10b981',Product:'#0ea5e9',BD:'#f59e0b',Ops:'#f97316',Marketing:'#ec4899'}[fn]||'#94a3b8');
-const STC=st=>{
+var SC={'Not Started':'#94a3b8','In Progress':'#2563eb','On Track':'#059669','At Risk':'#d97706','Delayed':'#dc2626','Done':'#10b981','On Hold':'#6b7280'};
+var SI={'Not Started':'○','In Progress':'◉','On Track':'●','At Risk':'⚠','Delayed':'✕','Done':'✓','On Hold':'⏸'};
+var TC=fn=>({Demand:'#6366f1',Driver:'#10b981',Product:'#0ea5e9',BD:'#f59e0b',Ops:'#f97316',Marketing:'#ec4899'}[fn]||'#94a3b8');
+var STC=st=>{
   if(st==='Acquisition')     return{bg:'#f59e0b',tx:'#92400e'};
   if(st==='Order Push')      return{bg:'#6366f1',tx:'#312e81'};
   if(st==='COMMANDO')        return{bg:'#ef4444',tx:'#7f1d1d'};
@@ -885,7 +885,7 @@ function popSels(){
   renderMonthPills();
 }
 function applyF(){fP=document.getElementById('fP').value;fS=document.getElementById('fS').value;fT=document.getElementById('fT').value;fCity=document.getElementById('fCity').value;render();}
-const getF=()=>data.filter(d=>{
+var getF=()=>data.filter(d=>{
   if(fP&&d.proj!==fP)return false;
   if(fS&&d.sub!==fS)return false;
   if(fT&&d.fn!==fT)return false;
@@ -928,7 +928,7 @@ function group(items){
 // ─────────────────────────────────────────────────────
 // EXPAND STATE
 // ─────────────────────────────────────────────────────
-const xP=new Set(), xS=new Set();
+var xP=new Set(), xS=new Set();
 
 // ─────────────────────────────────────────────────────
 // STATUS STRIP
@@ -994,8 +994,8 @@ function clearMonths(){fMonths.clear();renderMonthPills();render();}
 
 function worst(ss){for(const s of['Delayed','At Risk','In Progress','On Track','Not Started','On Hold','Done'])if(ss.includes(s))return s;return ss[0]||'Not Started';}
 function fmtD(s){return s?new Date(s).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'}):'—';}
-const esc=s=>(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-const totalW=()=>MNS.length*MW;
+var esc=s=>(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+var totalW=()=>MNS.length*MW;
 
 function tbg(){return`<div class="tbg">${MNS.map(m=>{const q=m.m<3?1:m.m<6?2:m.m<9?3:4;return`<div class="tc${m.key===TODK?' cur':''}${q%2===0?' qe':''}"></div>`;}).join('')}</div>`;}
 
@@ -1210,7 +1210,7 @@ function saveD(){
 }
 
 // TOOLTIP
-const tip=document.getElementById('tipEl');
+var tip=document.getElementById('tipEl');
 function tipAgg(e,o){
   tip.innerHTML=`<div class="tt">${o.proj} — ${o.sub}</div>
     <div class="tr"><span class="tk">Status</span><span class="tv">${SI[o.status]||''} ${o.status}</span></div>
@@ -1317,9 +1317,9 @@ setTimeout(()=>{if(TIDX>=0)document.getElementById('tp').scrollLeft=Math.max(0,(
 
 <script>
 // ─────────────────────────────────────────────────────
-// SHARED DATA (same as Gantt localStorage key sfg4)
+// SHARED DATA — reuse BASE from Gantt panel (defined above)
 // ─────────────────────────────────────────────────────
-var BASE = [
+var _BASE_STUB = [
   {id:'AFP1_VN',s:'2025-04-01',e:'2025-04-01',city:'VN',zone:'VN',proj:'Affiliate',sub:'Phase 1',stage:'',fn:'Demand',desc:'',status:'Not Started',p:0,prio:'Medium',owner:'',last_updated:'',note:''},
   {id:'AFP4_VN',s:'2025-09-01',e:'2025-09-01',city:'VN',zone:'VN',proj:'Affiliate',sub:'Phase 42',stage:'',fn:'Demand',desc:'',status:'Not Started',p:0,prio:'Medium',owner:'',last_updated:'',note:''},
   {id:'CHNL_VN_ĂNR',s:'2025-05-01',e:'2025-05-01',city:'VN',zone:'ăn ngon rẻ',proj:'Cheap Meal',sub:'Newly Launch',stage:'',fn:'Demand',desc:'ăn ngon rẻ',status:'Not Started',p:0,prio:'Medium',owner:'',last_updated:'',note:''},
@@ -1414,14 +1414,14 @@ var BASE = [
   {id:'PUT_VN_LEA_DR_02',s:'2026-02-01',e:'2026-03-01',city:'VN',zone:'Driver Recovery',proj:'Public Holiday',sub:'Tet',stage:'Learning',fn:'Driver',desc:'Driver Recovery',status:'Not Started',p:0,prio:'Medium',owner:'',last_updated:'',note:''},
   {id:'PUT_VN_LEA_MAR',s:'2026-02-01',e:'2026-03-01',city:'VN',zone:'Merchant Assortment Recovery',proj:'Public Holiday',sub:'Tet',stage:'Learning',fn:'Ops',desc:'Merchant Assortment Recovery',status:'Not Started',p:0,prio:'Medium',owner:'',last_updated:'',note:''}
 ];
-
-var data = JSON.parse(localStorage.getItem('sfg4')||'null') || BASE.map(d=>({...d}));
-const sv = () => localStorage.setItem('sfg4', JSON.stringify(data));
+// Use the Gantt panel's BASE (defined earlier in this page) as the source of truth
+var data = JSON.parse(localStorage.getItem('sfg4')||'null') || BASE.map(d=>({...d, last_updated: d.last_updated||''}));
+var sv = () => localStorage.setItem('sfg4', JSON.stringify(data));
 
 // Track today's update count
-const TODAY_KEY = 'sfupd_' + new Date().toISOString().slice(0,10);
+var TODAY_KEY = 'sfupd_' + new Date().toISOString().slice(0,10);
 var todayCount = parseInt(localStorage.getItem(TODAY_KEY)||'0');
-const updateCount = () => {
+var updateCount = () => {
   document.getElementById('saveCount').textContent = todayCount + ' updated today';
 };
 updateCount();
@@ -1429,7 +1429,7 @@ updateCount();
 // ─────────────────────────────────────────────────────
 // STATUS CONFIG
 // ─────────────────────────────────────────────────────
-const SC = {'Not Started':'#94a3b8','In Progress':'#2563eb','On Track':'#059669','At Risk':'#d97706','Delayed':'#dc2626','Done':'#10b981','On Hold':'#6b7280'};
+var SC = {'Not Started':'#94a3b8','In Progress':'#2563eb','On Track':'#059669','At Risk':'#d97706','Delayed':'#dc2626','Done':'#10b981','On Hold':'#6b7280'};
 
 // ─────────────────────────────────────────────────────
 // QUICK FORM — build initiative list
@@ -1675,7 +1675,7 @@ function showToast(m) {
 // ─────────────────────────────────────────────────────
 // AUTOCOMPLETE
 // ─────────────────────────────────────────────────────
-const STAGE_COLORS = {
+var STAGE_COLORS = {
   'Acquisition':'#f59e0b','Order Push':'#6366f1','COMMANDO':'#ef4444',
   'WP Cashback Trial':'#f59e0b','WP CB Customized':'#f97316',
   'Launch':'#10b981','Manual':'#0ea5e9','API':'#8b5cf6',
@@ -1683,7 +1683,7 @@ const STAGE_COLORS = {
 };
 
 // Build searchable index: id + all keywords from zone, city, proj, stage
-const IDX = data.map(d => ({
+var IDX = data.map(d => ({
   d,
   tokens: [
     d.id.toLowerCase(),
@@ -2906,26 +2906,26 @@ var BASE = [
 ];
 
 var data = JSON.parse(localStorage.getItem('sfg4')||'null') || BASE.map(d=>({...d}));
-const sv = () => localStorage.setItem('sfg4', JSON.stringify(data));
+var sv = () => localStorage.setItem('sfg4', JSON.stringify(data));
 
 // ─────────────────────────────────────────────────────
 // TIMELINE
 // ─────────────────────────────────────────────────────
-const MNS=[];
+var MNS=[];
 for(let y=2025;y<=2026;y++)for(let m=0;m<12;m++)
   MNS.push({y,m,key:`${y}-${String(m+1).padStart(2,'0')}`,lb:new Date(y,m,1).toLocaleString('en',{month:'short'})});
-const MW=88, TOD=new Date(), TODK=`${TOD.getFullYear()}-${String(TOD.getMonth()+1).padStart(2,'0')}`, TIDX=MNS.findIndex(m=>m.key===TODK);
+var MW=88, TOD=new Date(), TODK=`${TOD.getFullYear()}-${String(TOD.getMonth()+1).padStart(2,'0')}`, TIDX=MNS.findIndex(m=>m.key===TODK);
 
-const dx  = s=>{const d=new Date(s),i=MNS.findIndex(m=>m.y===d.getFullYear()&&m.m===d.getMonth());return i<0?0:(i+(d.getDate()-1)/new Date(d.getFullYear(),d.getMonth()+1,0).getDate())*MW;};
-const dxE = s=>{const d=new Date(s),i=MNS.findIndex(m=>m.y===d.getFullYear()&&m.m===d.getMonth());return i<0?0:(i+d.getDate()/new Date(d.getFullYear(),d.getMonth()+1,0).getDate())*MW;};
+var dx  = s=>{const d=new Date(s),i=MNS.findIndex(m=>m.y===d.getFullYear()&&m.m===d.getMonth());return i<0?0:(i+(d.getDate()-1)/new Date(d.getFullYear(),d.getMonth()+1,0).getDate())*MW;};
+var dxE = s=>{const d=new Date(s),i=MNS.findIndex(m=>m.y===d.getFullYear()&&m.m===d.getMonth());return i<0?0:(i+d.getDate()/new Date(d.getFullYear(),d.getMonth()+1,0).getDate())*MW;};
 
 // ─────────────────────────────────────────────────────
 // COLOURS
 // ─────────────────────────────────────────────────────
-const SC={'Not Started':'#94a3b8','In Progress':'#2563eb','On Track':'#059669','At Risk':'#d97706','Delayed':'#dc2626','Done':'#10b981','On Hold':'#6b7280'};
-const SI={'Not Started':'○','In Progress':'◉','On Track':'●','At Risk':'⚠','Delayed':'✕','Done':'✓','On Hold':'⏸'};
-const TC=fn=>({Demand:'#6366f1',Driver:'#10b981',Product:'#0ea5e9',BD:'#f59e0b',Ops:'#f97316',Marketing:'#ec4899'}[fn]||'#94a3b8');
-const STC=st=>{
+var SC={'Not Started':'#94a3b8','In Progress':'#2563eb','On Track':'#059669','At Risk':'#d97706','Delayed':'#dc2626','Done':'#10b981','On Hold':'#6b7280'};
+var SI={'Not Started':'○','In Progress':'◉','On Track':'●','At Risk':'⚠','Delayed':'✕','Done':'✓','On Hold':'⏸'};
+var TC=fn=>({Demand:'#6366f1',Driver:'#10b981',Product:'#0ea5e9',BD:'#f59e0b',Ops:'#f97316',Marketing:'#ec4899'}[fn]||'#94a3b8');
+var STC=st=>{
   if(st==='Acquisition')     return{bg:'#f59e0b',tx:'#92400e'};
   if(st==='Order Push')      return{bg:'#6366f1',tx:'#312e81'};
   if(st==='COMMANDO')        return{bg:'#ef4444',tx:'#7f1d1d'};
@@ -2953,7 +2953,7 @@ function popSels(){
   renderMonthPills();
 }
 function applyF(){fP=document.getElementById('fP').value;fS=document.getElementById('fS').value;fT=document.getElementById('fT').value;fCity=document.getElementById('fCity').value;render();}
-const getF=()=>data.filter(d=>{
+var getF=()=>data.filter(d=>{
   if(fP&&d.proj!==fP)return false;
   if(fS&&d.sub!==fS)return false;
   if(fT&&d.fn!==fT)return false;
@@ -2996,7 +2996,7 @@ function group(items){
 // ─────────────────────────────────────────────────────
 // EXPAND STATE
 // ─────────────────────────────────────────────────────
-const xP=new Set(), xS=new Set();
+var xP=new Set(), xS=new Set();
 
 // ─────────────────────────────────────────────────────
 // STATUS STRIP
@@ -3062,8 +3062,8 @@ function clearMonths(){fMonths.clear();renderMonthPills();render();}
 
 function worst(ss){for(const s of['Delayed','At Risk','In Progress','On Track','Not Started','On Hold','Done'])if(ss.includes(s))return s;return ss[0]||'Not Started';}
 function fmtD(s){return s?new Date(s).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'}):'—';}
-const esc=s=>(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-const totalW=()=>MNS.length*MW;
+var esc=s=>(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+var totalW=()=>MNS.length*MW;
 
 function tbg(){return`<div class="tbg">${MNS.map(m=>{const q=m.m<3?1:m.m<6?2:m.m<9?3:4;return`<div class="tc${m.key===TODK?' cur':''}${q%2===0?' qe':''}"></div>`;}).join('')}</div>`;}
 
@@ -3278,7 +3278,7 @@ function saveD(){
 }
 
 // TOOLTIP
-const tip=document.getElementById('tipEl');
+var tip=document.getElementById('tipEl');
 function tipAgg(e,o){
   tip.innerHTML=`<div class="tt">${o.proj} — ${o.sub}</div>
     <div class="tr"><span class="tk">Status</span><span class="tv">${SI[o.status]||''} ${o.status}</span></div>
@@ -3328,12 +3328,12 @@ setTimeout(()=>{if(TIDX>=0)document.getElementById('tp').scrollLeft=Math.max(0,(
 // BASE from shared
 
 var data = JSON.parse(localStorage.getItem('sfg4')||'null') || BASE.map(d=>({...d}));
-const sv = () => localStorage.setItem('sfg4', JSON.stringify(data));
+var sv = () => localStorage.setItem('sfg4', JSON.stringify(data));
 
 // Track today's update count
-const TODAY_KEY = 'sfupd_' + new Date().toISOString().slice(0,10);
+var TODAY_KEY = 'sfupd_' + new Date().toISOString().slice(0,10);
 var todayCount = parseInt(localStorage.getItem(TODAY_KEY)||'0');
-const updateCount = () => {
+var updateCount = () => {
   document.getElementById('saveCount').textContent = todayCount + ' updated today';
 };
 updateCount();
@@ -3341,7 +3341,7 @@ updateCount();
 // ─────────────────────────────────────────────────────
 // STATUS CONFIG
 // ─────────────────────────────────────────────────────
-const SC = {'Not Started':'#94a3b8','In Progress':'#2563eb','On Track':'#059669','At Risk':'#d97706','Delayed':'#dc2626','Done':'#10b981','On Hold':'#6b7280'};
+var SC = {'Not Started':'#94a3b8','In Progress':'#2563eb','On Track':'#059669','At Risk':'#d97706','Delayed':'#dc2626','Done':'#10b981','On Hold':'#6b7280'};
 
 // ─────────────────────────────────────────────────────
 // QUICK FORM — build initiative list
@@ -3587,7 +3587,7 @@ function showToast(m) {
 // ─────────────────────────────────────────────────────
 // AUTOCOMPLETE
 // ─────────────────────────────────────────────────────
-const STAGE_COLORS = {
+var STAGE_COLORS = {
   'Acquisition':'#f59e0b','Order Push':'#6366f1','COMMANDO':'#ef4444',
   'WP Cashback Trial':'#f59e0b','WP CB Customized':'#f97316',
   'Launch':'#10b981','Manual':'#0ea5e9','API':'#8b5cf6',
@@ -3595,7 +3595,7 @@ const STAGE_COLORS = {
 };
 
 // Build searchable index: id + all keywords from zone, city, proj, stage
-const IDX = data.map(d => ({
+var IDX = data.map(d => ({
   d,
   tokens: [
     d.id.toLowerCase(),
