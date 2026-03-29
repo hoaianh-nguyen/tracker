@@ -6,6 +6,52 @@
 <title>SF Initiatives Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Cabinet+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
+
+/* ── LOGIN OVERLAY ── */
+.login-overlay{
+  position:fixed;inset:0;background:linear-gradient(135deg,#0f0f1a 0%,#1a1a3e 100%);
+  z-index:10000;display:flex;align-items:center;justify-content:center;
+  font-family:'Cabinet Grotesk',sans-serif;
+}
+.login-card{
+  background:#fff;border-radius:16px;padding:36px 32px 28px;
+  width:100%;max-width:360px;box-shadow:0 24px 60px rgba(0,0,0,.4);
+}
+.login-logo{
+  display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:24px;
+}
+.login-logo-icon{
+  width:40px;height:40px;background:#4f46e5;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.login-logo-text .eye{font-family:'IBM Plex Mono',monospace;font-size:9px;
+  letter-spacing:.18em;text-transform:uppercase;color:#8888aa;}
+.login-logo-text .name{font-size:17px;font-weight:800;letter-spacing:-.02em;color:#1a1a2e;}
+.login-logo-text .name b{color:#4f46e5;}
+.login-title{font-size:20px;font-weight:800;letter-spacing:-.02em;color:#1a1a2e;
+  text-align:center;margin-bottom:4px;}
+.login-sub{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8888aa;
+  text-align:center;margin-bottom:24px;}
+.login-field{margin-bottom:12px;}
+.login-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;color:#8888aa;margin-bottom:5px;display:block;}
+.login-inp{width:100%;background:#f5f5fa;border:1.5px solid #dddde8;border-radius:8px;
+  padding:10px 12px;font-family:'IBM Plex Mono',monospace;font-size:12px;
+  color:#1a1a2e;outline:none;transition:border-color .15s;}
+.login-inp:focus{border-color:#4f46e5;background:#fff;}
+.login-err{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#dc2626;
+  margin-bottom:10px;display:none;text-align:center;}
+.login-err.show{display:block;}
+.login-btn{width:100%;background:#4f46e5;border:none;color:#fff;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
+  padding:12px;border-radius:9px;cursor:pointer;margin-top:4px;
+  transition:opacity .15s;letter-spacing:.05em;}
+.login-btn:active{opacity:.85;}
+.login-forgot{display:block;text-align:center;margin-top:12px;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8888aa;
+  text-decoration:none;cursor:pointer;}
+.login-forgot:hover{color:#4f46e5;}
+
 :root{
   --hub-bg:#f0f0f6;--hub-s1:#fff;--hub-s2:#f5f5fa;
   --hub-bd:#d8d8e8;--hub-bd2:#c4c4d8;
@@ -15,14 +61,14 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden;background:var(--hub-bg)}
 body{display:flex;flex-direction:column;font-family:'Cabinet Grotesk',sans-serif}
-.hub-nav{flex-shrink:0;height:var(--hub-nav);background:var(--hub-s1);border-bottom:1px solid var(--hub-bd);display:flex;align-items:stretch;z-index:200;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.hub-nav{flex-shrink:0;height:var(--hub-nav);background:var(--hub-s1);border-bottom:1px solid var(--hub-bd);display:flex;align-items:stretch;z-index:1000;box-shadow:0 1px 4px rgba(0,0,0,.06);position:sticky;top:0}
 .hub-brand{display:flex;align-items:center;padding:0 14px;border-right:1px solid var(--hub-bd);flex-shrink:0;gap:6px;min-width:0}
 .hub-brand-eye{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--hub-tx3)}
 .hub-brand-name{font-size:15px;font-weight:800;letter-spacing:-.03em;color:var(--hub-tx);white-space:nowrap}
 .hub-brand-name b{color:var(--hub-acc)}
 .hub-tabs{display:flex;align-items:stretch;flex:1;overflow-x:auto;scrollbar-width:none}
 .hub-tabs::-webkit-scrollbar{display:none}
-.hub-tab{display:flex;align-items:center;gap:6px;padding:0 14px;border:none;border-bottom:2.5px solid transparent;background:none;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--hub-tx3);transition:all .15s;white-space:nowrap;letter-spacing:-.01em;flex-shrink:0}
+.hub-tab{display:flex;align-items:center;gap:6px;padding:0 14px;border:none;border-bottom:2.5px solid transparent;background:none;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--hub-tx3);transition:all .15s;white-space:nowrap;letter-spacing:-.01em;flex-shrink:0;position:relative;z-index:1001}
 .hub-tab:hover{color:var(--hub-tx);background:var(--hub-s2)}
 .hub-tab.active{color:var(--hub-acc);border-bottom-color:var(--hub-acc)}
 .hub-tab-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
@@ -45,7 +91,7 @@ body{display:flex;flex-direction:column;font-family:'Cabinet Grotesk',sans-serif
   --bd:#d4d4e4; --bd2:#c0c0d8; --bd3:#a8a8c8;
   --tx:#1a1a2e; --tx2:#4a4a6a; --tx3:#8888aa;
   --acc:#4f46e5; --acc2:#6366f1;
-  --LW:340px; --RH:38px; --GH:32px; --SH:32px; --CH:26px; --MH:46px; --MW:88px;
+  --LW:220px; --RH:38px; --GH:32px; --SH:32px; --CH:26px; --MH:46px; --MW:88px;
   --ip:#2563eb; --ot:#059669; --ar:#d97706; --dl:#dc2626; --dn:#10b981; --ns:#94a3b8; --oh:#6b7280;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -100,9 +146,8 @@ body{background:var(--bg);color:var(--tx);font-family:'Cabinet Grotesk',sans-ser
 .lh{height:var(--MH);flex-shrink:0;display:flex;border-bottom:2px solid var(--bd2);background:var(--s3)}
 .lhc{display:flex;align-items:center;padding:0 10px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);border-right:1px solid var(--bd)}
 .lhc:last-child{border-right:none}
-.lb{flex:1;overflow-y:scroll;scrollbar-width:none}
-.lb::-webkit-scrollbar{display:none}
-.lb-in{overflow:visible}
+.lb{flex:1;overflow:hidden}
+.lb-in{overflow:hidden}
 
 /* TIMELINE PANE */
 .tp{flex:1;overflow:auto;background:var(--bg)}
@@ -244,6 +289,52 @@ body{background:var(--bg);color:var(--tx);font-family:'Cabinet Grotesk',sans-ser
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 <style>
+
+/* ── LOGIN OVERLAY ── */
+.login-overlay{
+  position:fixed;inset:0;background:linear-gradient(135deg,#0f0f1a 0%,#1a1a3e 100%);
+  z-index:10000;display:flex;align-items:center;justify-content:center;
+  font-family:'Cabinet Grotesk',sans-serif;
+}
+.login-card{
+  background:#fff;border-radius:16px;padding:36px 32px 28px;
+  width:100%;max-width:360px;box-shadow:0 24px 60px rgba(0,0,0,.4);
+}
+.login-logo{
+  display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:24px;
+}
+.login-logo-icon{
+  width:40px;height:40px;background:#4f46e5;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.login-logo-text .eye{font-family:'IBM Plex Mono',monospace;font-size:9px;
+  letter-spacing:.18em;text-transform:uppercase;color:#8888aa;}
+.login-logo-text .name{font-size:17px;font-weight:800;letter-spacing:-.02em;color:#1a1a2e;}
+.login-logo-text .name b{color:#4f46e5;}
+.login-title{font-size:20px;font-weight:800;letter-spacing:-.02em;color:#1a1a2e;
+  text-align:center;margin-bottom:4px;}
+.login-sub{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8888aa;
+  text-align:center;margin-bottom:24px;}
+.login-field{margin-bottom:12px;}
+.login-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;color:#8888aa;margin-bottom:5px;display:block;}
+.login-inp{width:100%;background:#f5f5fa;border:1.5px solid #dddde8;border-radius:8px;
+  padding:10px 12px;font-family:'IBM Plex Mono',monospace;font-size:12px;
+  color:#1a1a2e;outline:none;transition:border-color .15s;}
+.login-inp:focus{border-color:#4f46e5;background:#fff;}
+.login-err{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#dc2626;
+  margin-bottom:10px;display:none;text-align:center;}
+.login-err.show{display:block;}
+.login-btn{width:100%;background:#4f46e5;border:none;color:#fff;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
+  padding:12px;border-radius:9px;cursor:pointer;margin-top:4px;
+  transition:opacity .15s;letter-spacing:.05em;}
+.login-btn:active{opacity:.85;}
+.login-forgot{display:block;text-align:center;margin-top:12px;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8888aa;
+  text-decoration:none;cursor:pointer;}
+.login-forgot:hover{color:#4f46e5;}
+
 :root{
   --bg:#f2f2f7;--s1:#fff;--s2:#f8f8fc;--s3:#ededf5;
   --bd:#dddde8;--bd2:#c8c8dc;
@@ -376,6 +467,52 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;heigh
 .s-ar{color:#d97706} .s-dl{color:#dc2626} .s-dn{color:#10b981} .s-oh{color:#6b7280}
 </style>
 <style>
+
+/* ── LOGIN OVERLAY ── */
+.login-overlay{
+  position:fixed;inset:0;background:linear-gradient(135deg,#0f0f1a 0%,#1a1a3e 100%);
+  z-index:10000;display:flex;align-items:center;justify-content:center;
+  font-family:'Cabinet Grotesk',sans-serif;
+}
+.login-card{
+  background:#fff;border-radius:16px;padding:36px 32px 28px;
+  width:100%;max-width:360px;box-shadow:0 24px 60px rgba(0,0,0,.4);
+}
+.login-logo{
+  display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:24px;
+}
+.login-logo-icon{
+  width:40px;height:40px;background:#4f46e5;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.login-logo-text .eye{font-family:'IBM Plex Mono',monospace;font-size:9px;
+  letter-spacing:.18em;text-transform:uppercase;color:#8888aa;}
+.login-logo-text .name{font-size:17px;font-weight:800;letter-spacing:-.02em;color:#1a1a2e;}
+.login-logo-text .name b{color:#4f46e5;}
+.login-title{font-size:20px;font-weight:800;letter-spacing:-.02em;color:#1a1a2e;
+  text-align:center;margin-bottom:4px;}
+.login-sub{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8888aa;
+  text-align:center;margin-bottom:24px;}
+.login-field{margin-bottom:12px;}
+.login-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;color:#8888aa;margin-bottom:5px;display:block;}
+.login-inp{width:100%;background:#f5f5fa;border:1.5px solid #dddde8;border-radius:8px;
+  padding:10px 12px;font-family:'IBM Plex Mono',monospace;font-size:12px;
+  color:#1a1a2e;outline:none;transition:border-color .15s;}
+.login-inp:focus{border-color:#4f46e5;background:#fff;}
+.login-err{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#dc2626;
+  margin-bottom:10px;display:none;text-align:center;}
+.login-err.show{display:block;}
+.login-btn{width:100%;background:#4f46e5;border:none;color:#fff;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
+  padding:12px;border-radius:9px;cursor:pointer;margin-top:4px;
+  transition:opacity .15s;letter-spacing:.05em;}
+.login-btn:active{opacity:.85;}
+.login-forgot{display:block;text-align:center;margin-top:12px;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8888aa;
+  text-decoration:none;cursor:pointer;}
+.login-forgot:hover{color:#4f46e5;}
+
 :root{
   --bg:#f4f4f8;--s1:#fff;--s2:#f0f0f6;--s3:#e8e8f2;
   --bd:#d8d8e8;--bd2:#c4c4d8;
@@ -449,6 +586,52 @@ body{background:var(--bg);color:var(--tx);font-family:'Cabinet Grotesk',sans-ser
 .note strong{font-weight:600}
 </style>
 <style>
+
+/* ── LOGIN OVERLAY ── */
+.login-overlay{
+  position:fixed;inset:0;background:linear-gradient(135deg,#0f0f1a 0%,#1a1a3e 100%);
+  z-index:10000;display:flex;align-items:center;justify-content:center;
+  font-family:'Cabinet Grotesk',sans-serif;
+}
+.login-card{
+  background:#fff;border-radius:16px;padding:36px 32px 28px;
+  width:100%;max-width:360px;box-shadow:0 24px 60px rgba(0,0,0,.4);
+}
+.login-logo{
+  display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:24px;
+}
+.login-logo-icon{
+  width:40px;height:40px;background:#4f46e5;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.login-logo-text .eye{font-family:'IBM Plex Mono',monospace;font-size:9px;
+  letter-spacing:.18em;text-transform:uppercase;color:#8888aa;}
+.login-logo-text .name{font-size:17px;font-weight:800;letter-spacing:-.02em;color:#1a1a2e;}
+.login-logo-text .name b{color:#4f46e5;}
+.login-title{font-size:20px;font-weight:800;letter-spacing:-.02em;color:#1a1a2e;
+  text-align:center;margin-bottom:4px;}
+.login-sub{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8888aa;
+  text-align:center;margin-bottom:24px;}
+.login-field{margin-bottom:12px;}
+.login-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;color:#8888aa;margin-bottom:5px;display:block;}
+.login-inp{width:100%;background:#f5f5fa;border:1.5px solid #dddde8;border-radius:8px;
+  padding:10px 12px;font-family:'IBM Plex Mono',monospace;font-size:12px;
+  color:#1a1a2e;outline:none;transition:border-color .15s;}
+.login-inp:focus{border-color:#4f46e5;background:#fff;}
+.login-err{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#dc2626;
+  margin-bottom:10px;display:none;text-align:center;}
+.login-err.show{display:block;}
+.login-btn{width:100%;background:#4f46e5;border:none;color:#fff;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
+  padding:12px;border-radius:9px;cursor:pointer;margin-top:4px;
+  transition:opacity .15s;letter-spacing:.05em;}
+.login-btn:active{opacity:.85;}
+.login-forgot{display:block;text-align:center;margin-top:12px;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8888aa;
+  text-decoration:none;cursor:pointer;}
+.login-forgot:hover{color:#4f46e5;}
+
 :root{
   --bg:#f4f4f8;--s1:#fff;--s2:#f0f0f6;--s3:#e8e8f2;
   --bd:#d8d8e8;--bd2:#c4c4d8;
@@ -531,6 +714,52 @@ code{font-family:'IBM Plex Mono',monospace;font-size:11px;background:rgba(79,70,
 .pb-body{font-size:12px;color:#78350f;line-height:1.7;font-family:'IBM Plex Mono',monospace}
 </style>
 <style>
+
+/* ── LOGIN OVERLAY ── */
+.login-overlay{
+  position:fixed;inset:0;background:linear-gradient(135deg,#0f0f1a 0%,#1a1a3e 100%);
+  z-index:10000;display:flex;align-items:center;justify-content:center;
+  font-family:'Cabinet Grotesk',sans-serif;
+}
+.login-card{
+  background:#fff;border-radius:16px;padding:36px 32px 28px;
+  width:100%;max-width:360px;box-shadow:0 24px 60px rgba(0,0,0,.4);
+}
+.login-logo{
+  display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:24px;
+}
+.login-logo-icon{
+  width:40px;height:40px;background:#4f46e5;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.login-logo-text .eye{font-family:'IBM Plex Mono',monospace;font-size:9px;
+  letter-spacing:.18em;text-transform:uppercase;color:#8888aa;}
+.login-logo-text .name{font-size:17px;font-weight:800;letter-spacing:-.02em;color:#1a1a2e;}
+.login-logo-text .name b{color:#4f46e5;}
+.login-title{font-size:20px;font-weight:800;letter-spacing:-.02em;color:#1a1a2e;
+  text-align:center;margin-bottom:4px;}
+.login-sub{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8888aa;
+  text-align:center;margin-bottom:24px;}
+.login-field{margin-bottom:12px;}
+.login-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;color:#8888aa;margin-bottom:5px;display:block;}
+.login-inp{width:100%;background:#f5f5fa;border:1.5px solid #dddde8;border-radius:8px;
+  padding:10px 12px;font-family:'IBM Plex Mono',monospace;font-size:12px;
+  color:#1a1a2e;outline:none;transition:border-color .15s;}
+.login-inp:focus{border-color:#4f46e5;background:#fff;}
+.login-err{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#dc2626;
+  margin-bottom:10px;display:none;text-align:center;}
+.login-err.show{display:block;}
+.login-btn{width:100%;background:#4f46e5;border:none;color:#fff;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
+  padding:12px;border-radius:9px;cursor:pointer;margin-top:4px;
+  transition:opacity .15s;letter-spacing:.05em;}
+.login-btn:active{opacity:.85;}
+.login-forgot{display:block;text-align:center;margin-top:12px;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8888aa;
+  text-decoration:none;cursor:pointer;}
+.login-forgot:hover{color:#4f46e5;}
+
 :root{
   --bg:#f2f2f7;--s1:#fff;--s2:#f8f8fc;--s3:#ededf5;
   --bd:#dddde8;--bd2:#c8c8dc;
@@ -591,49 +820,77 @@ body{background:var(--bg);color:var(--tx);font-family:'Cabinet Grotesk',sans-ser
 /* Toast */
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--green);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:9px 20px;border-radius:100px;opacity:0;transition:all .2s;pointer-events:none;z-index:300;white-space:nowrap}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
-/* ── HUB OVERRIDES (must be last to win cascade) ── */
-html,body{height:100%!important;overflow:hidden!important;padding:0!important;margin:0!important;min-height:0!important}
-body{display:flex!important;flex-direction:column!important;font-size:13px}
-.hub-panel .topbar,.hub-panel#panel-gantt .topbar{padding:8px 16px!important;flex-wrap:wrap!important;justify-content:flex-start!important}
-
-/* LOGIN */
-#login-overlay{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;}
-.login-box{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:32px 28px;width:320px;box-shadow:0 8px 40px rgba(79,70,229,.1),0 2px 8px rgba(0,0,0,.08);}
-.login-logo{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
-.login-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#4f46e5,#6366f1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;}
-.login-logo-text{font-size:16px;font-weight:800;letter-spacing:-.03em;color:var(--tx);}.login-logo-text b{color:var(--acc);}
-.login-field{margin-bottom:14px;}
-.login-field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;}
-.login-field input{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:9px 12px;color:var(--tx);font-family:'Cabinet Grotesk',sans-serif;font-size:13px;outline:none;transition:border-color .2s;}
-.login-field input:focus{border-color:var(--acc);background:#fff;}
-.login-btn{width:100%;background:var(--acc);color:#fff;border:none;border-radius:8px;padding:10px;font-family:'Cabinet Grotesk',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .2s;margin-top:6px;letter-spacing:-.01em;}
-.login-btn:hover{opacity:.88;}
-.login-err{color:var(--dl);font-family:'IBM Plex Mono',monospace;font-size:10px;margin-top:8px;text-align:center;min-height:14px;}
 </style>
 </head>
-<body>
 
-<div id="login-overlay">
-  <div class="login-box">
+<!-- LOGIN OVERLAY -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-card">
     <div class="login-logo">
       <div class="login-logo-icon">🚀</div>
-      <div class="login-logo-text"><b>SF</b> Initiatives Hub</div>
+      <div class="login-logo-text">
+        <div class="eye">// SF Initiatives</div>
+        <div class="name">Operations <b>Hub</b></div>
+      </div>
+    </div>
+    <div class="login-title">Sign in</div>
+    <div class="login-sub">Access restricted to SF team members</div>
+    <div class="login-field">
+      <label class="login-lbl" for="loginUser">Username</label>
+      <input class="login-inp" type="text" id="loginUser" placeholder="Enter username" autocomplete="username">
     </div>
     <div class="login-field">
-      <label>Username</label>
-      <input id="li-u" type="text" placeholder="Enter username" autocomplete="username">
+      <label class="login-lbl" for="loginPass">Password</label>
+      <input class="login-inp" type="password" id="loginPass" placeholder="Enter password"
+        autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
-    <div class="login-field">
-      <label>Password</label>
-      <input id="li-p" type="password" placeholder="Enter password" autocomplete="current-password">
-    </div>
-    <button class="login-btn" onclick="_loginSubmit()">Sign In</button>
-    <div class="login-err" id="li-err"></div>
-    <div style="text-align:center;margin-top:14px;">
-      <a id="forgot-link" href="#" onclick="_forgotPw(event)" style="color:var(--tx3);font-family:'IBM Plex Mono',monospace;font-size:10px;text-decoration:none;border-bottom:1px dashed var(--bd);padding-bottom:1px;cursor:pointer;transition:color .15s;">Forgot password?</a>
-    </div>
+    <div class="login-err" id="loginErr">Incorrect username or password</div>
+    <button class="login-btn" onclick="doLogin()">Sign In</button>
+    <a class="login-forgot" onclick="alert('Contact your team admin to reset access.')">Forgot password?</a>
   </div>
 </div>
+
+<script>
+/* ── LOGIN LOGIC ── */
+(function(){
+  const CREDS = [
+    {u:'hoaianh.nguyen', p:'Mk@123456'},
+  ];
+  const SESSION_KEY = 'sf_authed';
+
+  function checkSession(){
+    const t = sessionStorage.getItem(SESSION_KEY);
+    if(t && Date.now() - parseInt(t) < 8*60*60*1000){ // 8hr session
+      hideLogin();
+    }
+  }
+
+  function doLogin(){
+    const u = document.getElementById('loginUser').value.trim().toLowerCase();
+    const p = document.getElementById('loginPass').value;
+    const ok = CREDS.some(c => c.u === u && c.p === p);
+    if(ok){
+      sessionStorage.setItem(SESSION_KEY, Date.now().toString());
+      hideLogin();
+    } else {
+      document.getElementById('loginErr').classList.add('show');
+      document.getElementById('loginPass').value = '';
+      document.getElementById('loginPass').focus();
+    }
+  }
+
+  function hideLogin(){
+    const ov = document.getElementById('loginOverlay');
+    if(ov){ ov.style.opacity='0'; ov.style.transition='opacity .3s';
+      setTimeout(()=>ov.style.display='none',300); }
+  }
+
+  window.doLogin = doLogin;
+  window.addEventListener('DOMContentLoaded', checkSession);
+})();
+</script>
+
+<body>
 
 <nav class="hub-nav">
   <div class="hub-brand">
@@ -667,16 +924,7 @@ body{display:flex!important;flex-direction:column!important;font-size:13px}
 </nav>
 
 <div class="hub-panels">
-  <div class="hub-panel active" id="panel-gantt"><div class="topbar">
-  <div class="filters">
-    <div class="fg"><span class="flb">Project</span><select class="fsel" id="fP" onchange="applyF()"><option value="">All</option></select></div>
-    <div class="fg"><span class="flb">Sub</span><select class="fsel" id="fS" onchange="applyF()"><option value="">All</option></select></div>
-    <div class="fg"><span class="flb">Team</span><select class="fsel" id="fT" onchange="applyF()"><option value="">All</option></select></div>
-    <div class="fg"><span class="flb">City</span><select class="fsel" id="fCity" onchange="applyF()"><option value="">All</option></select></div>
-  </div>
-  <button class="btn-ex" onclick="doExport()">↓ Export CSV</button>
-</div>
-
+  <div class="hub-panel active" id="panel-gantt">
 <div class="sbar" id="sbar"></div>
 
 <div class="mprow" id="mprow"></div>
@@ -741,7 +989,7 @@ body{display:flex!important;flex-direction:column!important;font-size:13px}
 // zone = the specific area/campaign (HN1, HN2, whole city, campaign name)
 // Phases on the same zone+city row must be NON-OVERLAPPING and sorted by start
 // ─────────────────────────────────────────────────────
-var BASE = [
+const BASE = [
   {id:'AFP1_VN',s:'2025-04-01',e:'2025-04-01',city:'VN',zone:'VN',proj:'Affiliate',sub:'Phase 1',stage:'',fn:'Demand',desc:'',status:'Not Started',p:0,prio:'Medium',owner:'',note:''},
   {id:'AFP4_VN',s:'2025-09-01',e:'2025-09-01',city:'VN',zone:'VN',proj:'Affiliate',sub:'Phase 42',stage:'',fn:'Demand',desc:'',status:'Not Started',p:0,prio:'Medium',owner:'',note:''},
   {id:'CHNL_VN_ĂNR',s:'2025-05-01',e:'2025-05-01',city:'VN',zone:'ăn ngon rẻ',proj:'Cheap Meal',sub:'Newly Launch',stage:'',fn:'Demand',desc:'ăn ngon rẻ',status:'Not Started',p:0,prio:'Medium',owner:'',note:''},
@@ -837,27 +1085,27 @@ var BASE = [
   {id:'PUT_VN_LEA_MAR',s:'2026-02-01',e:'2026-03-01',city:'VN',zone:'Merchant Assortment Recovery',proj:'Public Holiday',sub:'Tet',stage:'Learning',fn:'Ops',desc:'Merchant Assortment Recovery',status:'Not Started',p:0,prio:'Medium',owner:'',note:''}
 ];
 
-var data = JSON.parse(localStorage.getItem('sfg4')||'null') || BASE.map(d=>({...d}));
-var sv = () => localStorage.setItem('sfg4', JSON.stringify(data));
+let data = JSON.parse(localStorage.getItem('sfg4')||'null') || BASE.map(d=>({...d}));
+const sv = () => localStorage.setItem('sfg4', JSON.stringify(data));
 
 // ─────────────────────────────────────────────────────
 // TIMELINE
 // ─────────────────────────────────────────────────────
-var MNS=[];
+const MNS=[];
 for(let y=2025;y<=2026;y++)for(let m=0;m<12;m++)
   MNS.push({y,m,key:`${y}-${String(m+1).padStart(2,'0')}`,lb:new Date(y,m,1).toLocaleString('en',{month:'short'})});
-var MW=88, TOD=new Date(), TODK=`${TOD.getFullYear()}-${String(TOD.getMonth()+1).padStart(2,'0')}`, TIDX=MNS.findIndex(m=>m.key===TODK);
+const MW=88, TOD=new Date(), TODK=`${TOD.getFullYear()}-${String(TOD.getMonth()+1).padStart(2,'0')}`, TIDX=MNS.findIndex(m=>m.key===TODK);
 
-var dx  = s=>{const d=new Date(s),i=MNS.findIndex(m=>m.y===d.getFullYear()&&m.m===d.getMonth());return i<0?0:(i+(d.getDate()-1)/new Date(d.getFullYear(),d.getMonth()+1,0).getDate())*MW;};
-var dxE = s=>{const d=new Date(s),i=MNS.findIndex(m=>m.y===d.getFullYear()&&m.m===d.getMonth());return i<0?0:(i+d.getDate()/new Date(d.getFullYear(),d.getMonth()+1,0).getDate())*MW;};
+const dx  = s=>{const d=new Date(s),i=MNS.findIndex(m=>m.y===d.getFullYear()&&m.m===d.getMonth());return i<0?0:(i+(d.getDate()-1)/new Date(d.getFullYear(),d.getMonth()+1,0).getDate())*MW;};
+const dxE = s=>{const d=new Date(s),i=MNS.findIndex(m=>m.y===d.getFullYear()&&m.m===d.getMonth());return i<0?0:(i+d.getDate()/new Date(d.getFullYear(),d.getMonth()+1,0).getDate())*MW;};
 
 // ─────────────────────────────────────────────────────
 // COLOURS
 // ─────────────────────────────────────────────────────
-var SC={'Not Started':'#94a3b8','In Progress':'#2563eb','On Track':'#059669','At Risk':'#d97706','Delayed':'#dc2626','Done':'#10b981','On Hold':'#6b7280'};
-var SI={'Not Started':'○','In Progress':'◉','On Track':'●','At Risk':'⚠','Delayed':'✕','Done':'✓','On Hold':'⏸'};
-var TC=fn=>({Demand:'#6366f1',Driver:'#10b981',Product:'#0ea5e9',BD:'#f59e0b',Ops:'#f97316',Marketing:'#ec4899'}[fn]||'#94a3b8');
-var STC=st=>{
+const SC={'Not Started':'#94a3b8','In Progress':'#2563eb','On Track':'#059669','At Risk':'#d97706','Delayed':'#dc2626','Done':'#10b981','On Hold':'#6b7280'};
+const SI={'Not Started':'○','In Progress':'◉','On Track':'●','At Risk':'⚠','Delayed':'✕','Done':'✓','On Hold':'⏸'};
+const TC=fn=>({Demand:'#6366f1',Driver:'#10b981',Product:'#0ea5e9',BD:'#f59e0b',Ops:'#f97316',Marketing:'#ec4899'}[fn]||'#94a3b8');
+const STC=st=>{
   if(st==='Acquisition')     return{bg:'#f59e0b',tx:'#92400e'};
   if(st==='Order Push')      return{bg:'#6366f1',tx:'#312e81'};
   if(st==='COMMANDO')        return{bg:'#ef4444',tx:'#7f1d1d'};
@@ -885,7 +1133,7 @@ function popSels(){
   renderMonthPills();
 }
 function applyF(){fP=document.getElementById('fP').value;fS=document.getElementById('fS').value;fT=document.getElementById('fT').value;fCity=document.getElementById('fCity').value;render();}
-var getF=()=>data.filter(d=>{
+const getF=()=>data.filter(d=>{
   if(fP&&d.proj!==fP)return false;
   if(fS&&d.sub!==fS)return false;
   if(fT&&d.fn!==fT)return false;
@@ -928,7 +1176,7 @@ function group(items){
 // ─────────────────────────────────────────────────────
 // EXPAND STATE
 // ─────────────────────────────────────────────────────
-var xP=new Set(), xS=new Set();
+const xP=new Set(), xS=new Set();
 
 // ─────────────────────────────────────────────────────
 // STATUS STRIP
@@ -994,8 +1242,8 @@ function clearMonths(){fMonths.clear();renderMonthPills();render();}
 
 function worst(ss){for(const s of['Delayed','At Risk','In Progress','On Track','Not Started','On Hold','Done'])if(ss.includes(s))return s;return ss[0]||'Not Started';}
 function fmtD(s){return s?new Date(s).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'}):'—';}
-var esc=s=>(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-var totalW=()=>MNS.length*MW;
+const esc=s=>(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+const totalW=()=>MNS.length*MW;
 
 function tbg(){return`<div class="tbg">${MNS.map(m=>{const q=m.m<3?1:m.m<6?2:m.m<9?3:4;return`<div class="tc${m.key===TODK?' cur':''}${q%2===0?' qe':''}"></div>`;}).join('')}</div>`;}
 
@@ -1210,7 +1458,7 @@ function saveD(){
 }
 
 // TOOLTIP
-var tip=document.getElementById('tipEl');
+const tip=document.getElementById('tipEl');
 function tipAgg(e,o){
   tip.innerHTML=`<div class="tt">${o.proj} — ${o.sub}</div>
     <div class="tr"><span class="tk">Status</span><span class="tv">${SI[o.status]||''} ${o.status}</span></div>
@@ -1253,17 +1501,7 @@ popSels();
 render();
 setTimeout(()=>{if(TIDX>=0)document.getElementById('tp').scrollLeft=Math.max(0,(TIDX-2)*MW);},120);
 </script></div>
-  <div class="hub-panel" id="panel-update"><div class="topbar">
-  <div class="brand">
-    <div class="brand-eye">// SF Initiatives</div>
-    <div class="brand-name">Quick <b>Update</b></div>
-  </div>
-  <div class="topbar-right">
-    <span class="save-count" id="saveCount">0 updated today</span>
-    <a class="btn-gantt" href="initiatives-gantt-v8.html">↗ Open Gantt</a>
-  </div>
-</div>
-
+  <div class="hub-panel" id="panel-update">
 <div class="main">
 
   <!-- ══ LEFT: FREE TEXT ══ -->
@@ -1317,9 +1555,9 @@ setTimeout(()=>{if(TIDX>=0)document.getElementById('tp').scrollLeft=Math.max(0,(
 
 <script>
 // ─────────────────────────────────────────────────────
-// SHARED DATA — reuse BASE from Gantt panel (defined above)
+// SHARED DATA (same as Gantt localStorage key sfg4)
 // ─────────────────────────────────────────────────────
-var _BASE_STUB = [
+const BASE = [
   {id:'AFP1_VN',s:'2025-04-01',e:'2025-04-01',city:'VN',zone:'VN',proj:'Affiliate',sub:'Phase 1',stage:'',fn:'Demand',desc:'',status:'Not Started',p:0,prio:'Medium',owner:'',last_updated:'',note:''},
   {id:'AFP4_VN',s:'2025-09-01',e:'2025-09-01',city:'VN',zone:'VN',proj:'Affiliate',sub:'Phase 42',stage:'',fn:'Demand',desc:'',status:'Not Started',p:0,prio:'Medium',owner:'',last_updated:'',note:''},
   {id:'CHNL_VN_ĂNR',s:'2025-05-01',e:'2025-05-01',city:'VN',zone:'ăn ngon rẻ',proj:'Cheap Meal',sub:'Newly Launch',stage:'',fn:'Demand',desc:'ăn ngon rẻ',status:'Not Started',p:0,prio:'Medium',owner:'',last_updated:'',note:''},
@@ -1414,14 +1652,14 @@ var _BASE_STUB = [
   {id:'PUT_VN_LEA_DR_02',s:'2026-02-01',e:'2026-03-01',city:'VN',zone:'Driver Recovery',proj:'Public Holiday',sub:'Tet',stage:'Learning',fn:'Driver',desc:'Driver Recovery',status:'Not Started',p:0,prio:'Medium',owner:'',last_updated:'',note:''},
   {id:'PUT_VN_LEA_MAR',s:'2026-02-01',e:'2026-03-01',city:'VN',zone:'Merchant Assortment Recovery',proj:'Public Holiday',sub:'Tet',stage:'Learning',fn:'Ops',desc:'Merchant Assortment Recovery',status:'Not Started',p:0,prio:'Medium',owner:'',last_updated:'',note:''}
 ];
-// Use the Gantt panel's BASE (defined earlier in this page) as the source of truth
-var data = JSON.parse(localStorage.getItem('sfg4')||'null') || BASE.map(d=>({...d, last_updated: d.last_updated||''}));
-var sv = () => localStorage.setItem('sfg4', JSON.stringify(data));
+
+let data = JSON.parse(localStorage.getItem('sfg4')||'null') || BASE.map(d=>({...d}));
+const sv = () => localStorage.setItem('sfg4', JSON.stringify(data));
 
 // Track today's update count
-var TODAY_KEY = 'sfupd_' + new Date().toISOString().slice(0,10);
-var todayCount = parseInt(localStorage.getItem(TODAY_KEY)||'0');
-var updateCount = () => {
+const TODAY_KEY = 'sfupd_' + new Date().toISOString().slice(0,10);
+let todayCount = parseInt(localStorage.getItem(TODAY_KEY)||'0');
+const updateCount = () => {
   document.getElementById('saveCount').textContent = todayCount + ' updated today';
 };
 updateCount();
@@ -1429,7 +1667,7 @@ updateCount();
 // ─────────────────────────────────────────────────────
 // STATUS CONFIG
 // ─────────────────────────────────────────────────────
-var SC = {'Not Started':'#94a3b8','In Progress':'#2563eb','On Track':'#059669','At Risk':'#d97706','Delayed':'#dc2626','Done':'#10b981','On Hold':'#6b7280'};
+const SC = {'Not Started':'#94a3b8','In Progress':'#2563eb','On Track':'#059669','At Risk':'#d97706','Delayed':'#dc2626','Done':'#10b981','On Hold':'#6b7280'};
 
 // ─────────────────────────────────────────────────────
 // QUICK FORM — build initiative list
@@ -1675,7 +1913,7 @@ function showToast(m) {
 // ─────────────────────────────────────────────────────
 // AUTOCOMPLETE
 // ─────────────────────────────────────────────────────
-var STAGE_COLORS = {
+const STAGE_COLORS = {
   'Acquisition':'#f59e0b','Order Push':'#6366f1','COMMANDO':'#ef4444',
   'WP Cashback Trial':'#f59e0b','WP CB Customized':'#f97316',
   'Launch':'#10b981','Manual':'#0ea5e9','API':'#8b5cf6',
@@ -1683,7 +1921,7 @@ var STAGE_COLORS = {
 };
 
 // Build searchable index: id + all keywords from zone, city, proj, stage
-var IDX = data.map(d => ({
+const IDX = data.map(d => ({
   d,
   tokens: [
     d.id.toLowerCase(),
@@ -1821,17 +2059,9 @@ document.addEventListener('click', e => {
 // ─────────────────────────────────────────────────────
 filterList('');
 </script></div>
-  <div class="hub-panel" id="panel-validation"><div class="wrap">
-
-  <div class="topbar">
-    <div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--tx3);margin-bottom:5px">// Data Quality</div>
-      <div class="brand">Gantt <b>Validation</b></div>
-    </div>
-    <button class="run-btn" onclick="runValidation()">▶ Run validation check</button>
-  </div>
-
-  <div class="summary" id="summary">
+  <div class="hub-panel" id="panel-validation">
+<div class="wrap">
+<div class="summary" id="summary">
     <div class="sc"><div class="sc-num" id="s-excel">—</div><div class="sc-lbl">Excel rows</div></div>
     <div class="sc"><div class="sc-num" id="s-gantt">—</div><div class="sc-lbl">Gantt items</div></div>
     <div class="sc"><div class="sc-num" style="color:var(--green)" id="s-ok">—</div><div class="sc-lbl">Matched</div></div>
@@ -1848,10 +2078,10 @@ filterList('');
 
 <script>
 // ── SOURCE OF TRUTH FROM EXCEL ──
-var EXCEL_TRUTH = [{"row": 2, "start": "2025-04-01", "end": null, "city": "VN", "proj": "Affiliate", "sub": "Phase 1", "desc": "", "fn": "Demand", "stage": "", "days": null}, {"row": 3, "start": "2025-09-01", "end": null, "city": "VN", "proj": "Affiliate", "sub": "Phase 42", "desc": "", "fn": "Demand", "stage": "", "days": null}, {"row": 4, "start": "2025-05-01", "end": null, "city": "VN", "proj": "Cheap Meal", "sub": "Newly Launch", "desc": "ăn ngon rẻ", "fn": "Demand", "stage": "", "days": null}, {"row": 5, "start": "2025-05-01", "end": null, "city": "VN", "proj": "Prepaid Deals", "sub": "Newly Launch", "desc": "later demand", "fn": "Demand", "stage": "", "days": null}, {"row": 7, "start": "2025-07-01", "end": null, "city": "VN", "proj": "Short Hub", "sub": "Newly Launch", "desc": "new type of hub for driver", "fn": "Driver", "stage": "", "days": null}, {"row": 11, "start": "2025-11-01", "end": null, "city": "Hai Phong", "proj": "Captain Hub", "sub": "Open in Hai Phong", "desc": "new type of hub for driver", "fn": "Driver", "stage": "", "days": null}, {"row": 14, "start": "2026-02-01", "end": null, "city": "Ha Noi", "proj": "Captain Hub", "sub": "Open in Ha Noi", "desc": "new type of hub for driver", "fn": "Driver", "stage": "", "days": null}, {"row": 15, "start": "2026-02-01", "end": null, "city": "VN", "proj": "Zalo OA", "sub": "Manual", "desc": "roll out for merchant", "fn": "Product", "stage": "", "days": null}, {"row": 16, "start": "2026-03-01", "end": null, "city": "VN", "proj": "Zalo OA", "sub": "API", "desc": "automate workflow", "fn": "Product", "stage": "", "days": null}, {"row": 17, "start": "2026-04-01", "end": null, "city": "VN", "proj": "Short Hub", "sub": "Order Tag in Assignment", "desc": "easy order tag", "fn": "", "stage": "", "days": null}, {"row": 18, "start": "2026-05-01", "end": null, "city": "VN", "proj": "Self Pick Up", "sub": "Newly Launch", "desc": "new type of delivery", "fn": "Demand", "stage": "", "days": null}, {"row": 19, "start": "2026-05-01", "end": null, "city": "VN", "proj": "Prepaid Deals", "sub": "Standalone App Entrance", "desc": "open new entrance on standalone app", "fn": "Demand", "stage": "", "days": null}, {"row": 20, "start": "2026-02-01", "end": null, "city": "VN", "proj": "Rating & Review", "sub": "Short Film", "desc": "", "fn": "", "stage": "", "days": null}, {"row": 23, "start": "2026-03-01", "end": "2026-03-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN1BachMai ; HN1CauGiay", "fn": "BD", "stage": "Acquisition", "days": 31}, {"row": 24, "start": "2026-04-01", "end": "2026-04-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN2DongDa ; HN2HoanKiem ; HN2CuaNam", "fn": "BD", "stage": "Acquisition", "days": 30}, {"row": 25, "start": "2026-05-01", "end": "2026-05-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN3NghiaDo ; HN3Lang ; HN3HaiBaTrung ; HN3NgocHa", "fn": "BD", "stage": "Acquisition", "days": 31}, {"row": 26, "start": "2026-06-01", "end": "2026-06-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN4VinhTuy ; HN4BaDinh ; HN4KimLien ; HN4GiangVo ; HN4ThanhXuan ; HN4TuongMai ; HN4VanMieu ; HN4HongHa", "fn": "BD", "stage": "Acquisition", "days": 30}, {"row": 27, "start": "2026-04-01", "end": "2026-04-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN1BachMai ; HN1CauGiay", "fn": "Demand", "stage": "Order Push", "days": 31}, {"row": 28, "start": "2026-05-01", "end": "2026-05-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN2DongDa ; HN2HoanKiem ; HN2CuaNam", "fn": "Demand", "stage": "Order Push", "days": 31}, {"row": 29, "start": "2026-06-01", "end": "2026-06-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN3NghiaDo ; HN3Lang ; HN3HaiBaTrung ; HN3NgocHa", "fn": "Demand", "stage": "Order Push", "days": 30}, {"row": 30, "start": "2026-07-01", "end": "2026-07-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN4VinhTuy ; HN4BaDinh ; HN4KimLien ; HN4GiangVo ; HN4ThanhXuan ; HN4TuongMai ; HN4VanMieu ; HN4HongHa", "fn": "Demand", "stage": "Order Push", "days": 31}, {"row": 31, "start": "2026-03-01", "end": "2026-05-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "BD", "stage": "Acquisition", "days": 31}, {"row": 32, "start": "2026-04-01", "end": "2026-07-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "Demand", "stage": "Order Push", "days": 92}, {"row": 33, "start": "2026-03-01", "end": "2026-05-01", "city": "HCM", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "BD", "stage": "Acquisition", "days": 62}, {"row": 34, "start": "2026-04-01", "end": "2026-07-01", "city": "HCM", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "Demand", "stage": "Order Push", "days": 92}, {"row": 35, "start": "2026-03-01", "end": "2026-04-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cashback Trial", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 36, "start": "2026-03-01", "end": "2026-04-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cashback Trial", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 37, "start": "2026-03-01", "end": "2026-04-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cashback Trial", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 38, "start": "2026-03-01", "end": "2026-04-01", "city": "Khanh Hoa", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cashback Trial", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 39, "start": "2026-03-01", "end": "2026-06-01", "city": "Binh Duong", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 93}, {"row": 40, "start": "2026-06-01", "end": "2026-08-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 62}, {"row": 41, "start": "2026-06-01", "end": "2026-08-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 62}, {"row": 42, "start": "2026-06-01", "end": "2026-08-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 62}, {"row": 43, "start": "2026-05-01", "end": "2026-06-01", "city": "Khanh Hoa", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 44, "start": "2026-09-01", "end": "2026-10-01", "city": "Dak Lak", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 31}, {"row": 45, "start": "2026-03-01", "end": "2026-04-01", "city": "Hai Phong", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 46, "start": "2026-05-01", "end": "2026-12-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 47, "start": "2026-05-01", "end": "2026-12-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 48, "start": "2026-05-01", "end": "2026-12-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 49, "start": "2026-07-01", "end": "2026-12-01", "city": "Binh Duong", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 154}, {"row": 50, "start": "2026-07-01", "end": "2026-12-01", "city": "Khanh Hoa", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 154}, {"row": 51, "start": "2026-07-01", "end": "2026-12-01", "city": "Dak Lak", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 154}, {"row": 52, "start": "2026-05-01", "end": "2026-12-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 53, "start": "2026-05-01", "end": "2026-12-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 54, "start": "2026-05-01", "end": "2026-12-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 55, "start": "2026-05-01", "end": "2026-12-01", "city": "Hai Phong", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 56, "start": "2026-05-01", "end": "2026-12-01", "city": "Hue", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 57, "start": "2026-05-01", "end": "2026-12-01", "city": "Binh Dinh", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 58, "start": "2026-09-01", "end": "2026-12-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "POS LEADS", "fn": "BD", "stage": "Acquisition", "days": 92}, {"row": 59, "start": "2026-09-01", "end": "2026-12-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "POS LEADS", "fn": "BD", "stage": "Acquisition", "days": 92}, {"row": 60, "start": "2026-09-01", "end": "2026-12-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "POS LEADS", "fn": "BD", "stage": "Acquisition", "days": 92}, {"row": 61, "start": "2026-03-01", "end": "2026-03-01", "city": "Da Nang", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 62, "start": "2026-03-01", "end": "2026-03-01", "city": "Binh Duong", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 63, "start": "2026-03-01", "end": "2026-03-01", "city": "Khanh Hoa", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 64, "start": "2026-04-01", "end": "2026-04-01", "city": "Dong Nai", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 65, "start": "2026-04-01", "end": "2026-04-01", "city": "Hue", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 66, "start": "2026-04-01", "end": "2026-04-01", "city": "Can Tho", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 67, "start": "2026-05-01", "end": "2026-04-01", "city": "HCM", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 68, "start": "2026-04-01", "end": "2026-04-01", "city": "Hai Phong", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Increase % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 69, "start": "2026-04-01", "end": "2026-04-01", "city": "Binh Dinh", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Increase % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 70, "start": "2026-05-01", "end": "2026-05-01", "city": "Ha Noi", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Increase % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 71, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Order Tag", "fn": "Product", "stage": "Construction", "days": 28}, {"row": 73, "start": "2026-01-01", "end": "2026-01-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Easy Order Tag", "fn": "Driver", "stage": "Definition", "days": 31}, {"row": 74, "start": "2026-03-01", "end": "2026-03-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Integration to Assignment", "fn": "Product", "stage": "Integration", "days": 31}, {"row": 75, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Short Hub Only Stage logic", "fn": "Product", "stage": "Enhancement", "days": 28}, {"row": 76, "start": "2025-10-01", "end": "2025-10-01", "city": "Da Nang", "proj": "Market Penetration", "sub": "Order Density", "desc": "Pick/Drop payout", "fn": "Driver", "stage": "Launching", "days": 31}, {"row": 77, "start": "2026-06-01", "end": "2026-06-01", "city": "Ha Noi", "proj": "Market Penetration", "sub": "Order Density", "desc": "Pick/Drop payout", "fn": "Driver", "stage": "Launching", "days": 30}, {"row": 78, "start": "2026-06-01", "end": "2026-06-01", "city": "HCM", "proj": "Market Penetration", "sub": "Order Density", "desc": "Pick/Drop payout", "fn": "Driver", "stage": "Launching", "days": 30}, {"row": 79, "start": "2026-03-01", "end": "2026-07-01", "city": "Hai Phong", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "DirO", "stage": "Sign MOU", "days": 31}, {"row": 80, "start": "2026-03-01", "end": "2026-07-01", "city": "Hue", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 81, "start": "2026-03-01", "end": "2026-07-01", "city": "Khanh Hoa", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "include Ninh Thuan", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 82, "start": "2026-03-01", "end": "2026-07-01", "city": "Binh Dinh", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "include Gia Lai", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 83, "start": "2026-03-01", "end": "2026-07-01", "city": "Dong Nai", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "include Binh Phuoc", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 84, "start": "2026-03-01", "end": "2026-07-01", "city": "Binh Thuan", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 85, "start": "2026-03-01", "end": "2026-07-01", "city": "Lam Dong", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "include Dak Nong", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 86, "start": "2026-04-01", "end": "2026-04-01", "city": "HCM", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "Lễ Hội Sông Nước", "fn": "DirO", "stage": "Event", "days": 30}, {"row": 87, "start": "2026-05-01", "end": "2026-05-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "Lễ Hội Ẩm Thực", "fn": "DirO", "stage": "Event", "days": 31}, {"row": 88, "start": "2026-06-01", "end": "2026-06-01", "city": "HCM", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "Du Lịch Biển - to be confirmed", "fn": "DirO", "stage": "Event", "days": 30}, {"row": 89, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Weekday x Hour x L2 Cate x Location", "fn": "Demand", "stage": "Learning", "days": 28}, {"row": 90, "start": "2026-03-01", "end": "2026-03-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Weekday x Hour x L2 Cate x Location", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 91, "start": "2026-04-01", "end": "2026-12-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Platform targeted push", "fn": "Demand", "stage": "Launching", "days": 245}, {"row": 92, "start": "2026-03-01", "end": "2026-03-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Store tag integration to collection", "fn": "Product", "stage": "Launching", "days": 31}, {"row": 93, "start": "2026-03-01", "end": "2026-04-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "User tag - realtime features", "fn": "Product", "stage": "Launching", "days": 32}, {"row": 94, "start": "2026-03-01", "end": "2026-04-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Voucher - distance based", "fn": "Product", "stage": "Launching", "days": 32}, {"row": 95, "start": "2026-01-01", "end": "2026-03-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "User tag - User Age ingest", "fn": "Product", "stage": "Launching", "days": 60}, {"row": 96, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Market Penetration", "sub": "OW", "desc": "Buyer Profile and Behaviours", "fn": "Demand", "stage": "Learning", "days": 1}, {"row": 97, "start": "2026-03-01", "end": "2026-12-01", "city": "VN", "proj": "Market Penetration", "sub": "OW", "desc": "Targeted Push", "fn": "Demand", "stage": "Order Push", "days": 276}, {"row": 98, "start": "2026-05-01", "end": "2026-08-01", "city": "VN", "proj": "Market Penetration", "sub": "OW", "desc": "Targeted Push - Buyer Movement", "fn": "Demand", "stage": "Order Push", "days": 93}, {"row": 99, "start": "2026-02-01", "end": "2026-03-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Non Food Fee impact learning", "fn": "BnP", "stage": "Learning", "days": 29}, {"row": 100, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Demand Recovery", "fn": "Demand", "stage": "Learning", "days": 1}, {"row": 101, "start": "2026-02-01", "end": "2026-03-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Platform Health Recovery", "fn": "Platform Health", "stage": "Learning", "days": 29}, {"row": 102, "start": "2026-02-01", "end": "2026-03-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Driver Recovery", "fn": "Driver", "stage": "Learning", "days": 29}, {"row": 103, "start": "2026-02-01", "end": "2026-03-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Merchant Assortment Recovery", "fn": "Ops", "stage": "Learning", "days": 29}];
+const EXCEL_TRUTH = [{"row": 2, "start": "2025-04-01", "end": null, "city": "VN", "proj": "Affiliate", "sub": "Phase 1", "desc": "", "fn": "Demand", "stage": "", "days": null}, {"row": 3, "start": "2025-09-01", "end": null, "city": "VN", "proj": "Affiliate", "sub": "Phase 42", "desc": "", "fn": "Demand", "stage": "", "days": null}, {"row": 4, "start": "2025-05-01", "end": null, "city": "VN", "proj": "Cheap Meal", "sub": "Newly Launch", "desc": "ăn ngon rẻ", "fn": "Demand", "stage": "", "days": null}, {"row": 5, "start": "2025-05-01", "end": null, "city": "VN", "proj": "Prepaid Deals", "sub": "Newly Launch", "desc": "later demand", "fn": "Demand", "stage": "", "days": null}, {"row": 7, "start": "2025-07-01", "end": null, "city": "VN", "proj": "Short Hub", "sub": "Newly Launch", "desc": "new type of hub for driver", "fn": "Driver", "stage": "", "days": null}, {"row": 11, "start": "2025-11-01", "end": null, "city": "Hai Phong", "proj": "Captain Hub", "sub": "Open in Hai Phong", "desc": "new type of hub for driver", "fn": "Driver", "stage": "", "days": null}, {"row": 14, "start": "2026-02-01", "end": null, "city": "Ha Noi", "proj": "Captain Hub", "sub": "Open in Ha Noi", "desc": "new type of hub for driver", "fn": "Driver", "stage": "", "days": null}, {"row": 15, "start": "2026-02-01", "end": null, "city": "VN", "proj": "Zalo OA", "sub": "Manual", "desc": "roll out for merchant", "fn": "Product", "stage": "", "days": null}, {"row": 16, "start": "2026-03-01", "end": null, "city": "VN", "proj": "Zalo OA", "sub": "API", "desc": "automate workflow", "fn": "Product", "stage": "", "days": null}, {"row": 17, "start": "2026-04-01", "end": null, "city": "VN", "proj": "Short Hub", "sub": "Order Tag in Assignment", "desc": "easy order tag", "fn": "", "stage": "", "days": null}, {"row": 18, "start": "2026-05-01", "end": null, "city": "VN", "proj": "Self Pick Up", "sub": "Newly Launch", "desc": "new type of delivery", "fn": "Demand", "stage": "", "days": null}, {"row": 19, "start": "2026-05-01", "end": null, "city": "VN", "proj": "Prepaid Deals", "sub": "Standalone App Entrance", "desc": "open new entrance on standalone app", "fn": "Demand", "stage": "", "days": null}, {"row": 20, "start": "2026-02-01", "end": null, "city": "VN", "proj": "Rating & Review", "sub": "Short Film", "desc": "", "fn": "", "stage": "", "days": null}, {"row": 23, "start": "2026-03-01", "end": "2026-03-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN1BachMai ; HN1CauGiay", "fn": "BD", "stage": "Acquisition", "days": 31}, {"row": 24, "start": "2026-04-01", "end": "2026-04-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN2DongDa ; HN2HoanKiem ; HN2CuaNam", "fn": "BD", "stage": "Acquisition", "days": 30}, {"row": 25, "start": "2026-05-01", "end": "2026-05-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN3NghiaDo ; HN3Lang ; HN3HaiBaTrung ; HN3NgocHa", "fn": "BD", "stage": "Acquisition", "days": 31}, {"row": 26, "start": "2026-06-01", "end": "2026-06-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN4VinhTuy ; HN4BaDinh ; HN4KimLien ; HN4GiangVo ; HN4ThanhXuan ; HN4TuongMai ; HN4VanMieu ; HN4HongHa", "fn": "BD", "stage": "Acquisition", "days": 30}, {"row": 27, "start": "2026-04-01", "end": "2026-04-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN1BachMai ; HN1CauGiay", "fn": "Demand", "stage": "Order Push", "days": 31}, {"row": 28, "start": "2026-05-01", "end": "2026-05-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN2DongDa ; HN2HoanKiem ; HN2CuaNam", "fn": "Demand", "stage": "Order Push", "days": 31}, {"row": 29, "start": "2026-06-01", "end": "2026-06-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN3NghiaDo ; HN3Lang ; HN3HaiBaTrung ; HN3NgocHa", "fn": "Demand", "stage": "Order Push", "days": 30}, {"row": 30, "start": "2026-07-01", "end": "2026-07-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN4VinhTuy ; HN4BaDinh ; HN4KimLien ; HN4GiangVo ; HN4ThanhXuan ; HN4TuongMai ; HN4VanMieu ; HN4HongHa", "fn": "Demand", "stage": "Order Push", "days": 31}, {"row": 31, "start": "2026-03-01", "end": "2026-05-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "BD", "stage": "Acquisition", "days": 31}, {"row": 32, "start": "2026-04-01", "end": "2026-07-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "Demand", "stage": "Order Push", "days": 92}, {"row": 33, "start": "2026-03-01", "end": "2026-05-01", "city": "HCM", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "BD", "stage": "Acquisition", "days": 62}, {"row": 34, "start": "2026-04-01", "end": "2026-07-01", "city": "HCM", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "Demand", "stage": "Order Push", "days": 92}, {"row": 35, "start": "2026-03-01", "end": "2026-04-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cashback Trial", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 36, "start": "2026-03-01", "end": "2026-04-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cashback Trial", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 37, "start": "2026-03-01", "end": "2026-04-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cashback Trial", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 38, "start": "2026-03-01", "end": "2026-04-01", "city": "Khanh Hoa", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cashback Trial", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 39, "start": "2026-03-01", "end": "2026-06-01", "city": "Binh Duong", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 93}, {"row": 40, "start": "2026-06-01", "end": "2026-08-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 62}, {"row": 41, "start": "2026-06-01", "end": "2026-08-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 62}, {"row": 42, "start": "2026-06-01", "end": "2026-08-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 62}, {"row": 43, "start": "2026-05-01", "end": "2026-06-01", "city": "Khanh Hoa", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 44, "start": "2026-09-01", "end": "2026-10-01", "city": "Dak Lak", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 31}, {"row": 45, "start": "2026-03-01", "end": "2026-04-01", "city": "Hai Phong", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 46, "start": "2026-05-01", "end": "2026-12-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 47, "start": "2026-05-01", "end": "2026-12-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 48, "start": "2026-05-01", "end": "2026-12-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 49, "start": "2026-07-01", "end": "2026-12-01", "city": "Binh Duong", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 154}, {"row": 50, "start": "2026-07-01", "end": "2026-12-01", "city": "Khanh Hoa", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 154}, {"row": 51, "start": "2026-07-01", "end": "2026-12-01", "city": "Dak Lak", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 154}, {"row": 52, "start": "2026-05-01", "end": "2026-12-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 53, "start": "2026-05-01", "end": "2026-12-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 54, "start": "2026-05-01", "end": "2026-12-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 55, "start": "2026-05-01", "end": "2026-12-01", "city": "Hai Phong", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 56, "start": "2026-05-01", "end": "2026-12-01", "city": "Hue", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 57, "start": "2026-05-01", "end": "2026-12-01", "city": "Binh Dinh", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 58, "start": "2026-09-01", "end": "2026-12-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "POS LEADS", "fn": "BD", "stage": "Acquisition", "days": 92}, {"row": 59, "start": "2026-09-01", "end": "2026-12-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "POS LEADS", "fn": "BD", "stage": "Acquisition", "days": 92}, {"row": 60, "start": "2026-09-01", "end": "2026-12-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "POS LEADS", "fn": "BD", "stage": "Acquisition", "days": 92}, {"row": 61, "start": "2026-03-01", "end": "2026-03-01", "city": "Da Nang", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 62, "start": "2026-03-01", "end": "2026-03-01", "city": "Binh Duong", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 63, "start": "2026-03-01", "end": "2026-03-01", "city": "Khanh Hoa", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 64, "start": "2026-04-01", "end": "2026-04-01", "city": "Dong Nai", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 65, "start": "2026-04-01", "end": "2026-04-01", "city": "Hue", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 66, "start": "2026-04-01", "end": "2026-04-01", "city": "Can Tho", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 67, "start": "2026-05-01", "end": "2026-04-01", "city": "HCM", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 68, "start": "2026-04-01", "end": "2026-04-01", "city": "Hai Phong", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Increase % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 69, "start": "2026-04-01", "end": "2026-04-01", "city": "Binh Dinh", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Increase % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 70, "start": "2026-05-01", "end": "2026-05-01", "city": "Ha Noi", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Increase % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 71, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Order Tag", "fn": "Product", "stage": "Construction", "days": 28}, {"row": 73, "start": "2026-01-01", "end": "2026-01-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Easy Order Tag", "fn": "Driver", "stage": "Definition", "days": 31}, {"row": 74, "start": "2026-03-01", "end": "2026-03-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Integration to Assignment", "fn": "Product", "stage": "Integration", "days": 31}, {"row": 75, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Short Hub Only Stage logic", "fn": "Product", "stage": "Enhancement", "days": 28}, {"row": 76, "start": "2025-10-01", "end": "2025-10-01", "city": "Da Nang", "proj": "Market Penetration", "sub": "Order Density", "desc": "Pick/Drop payout", "fn": "Driver", "stage": "Launching", "days": 31}, {"row": 77, "start": "2026-06-01", "end": "2026-06-01", "city": "Ha Noi", "proj": "Market Penetration", "sub": "Order Density", "desc": "Pick/Drop payout", "fn": "Driver", "stage": "Launching", "days": 30}, {"row": 78, "start": "2026-06-01", "end": "2026-06-01", "city": "HCM", "proj": "Market Penetration", "sub": "Order Density", "desc": "Pick/Drop payout", "fn": "Driver", "stage": "Launching", "days": 30}, {"row": 79, "start": "2026-03-01", "end": "2026-07-01", "city": "Hai Phong", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "DirO", "stage": "Sign MOU", "days": 31}, {"row": 80, "start": "2026-03-01", "end": "2026-07-01", "city": "Hue", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 81, "start": "2026-03-01", "end": "2026-07-01", "city": "Khanh Hoa", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "include Ninh Thuan", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 82, "start": "2026-03-01", "end": "2026-07-01", "city": "Binh Dinh", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "include Gia Lai", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 83, "start": "2026-03-01", "end": "2026-07-01", "city": "Dong Nai", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "include Binh Phuoc", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 84, "start": "2026-03-01", "end": "2026-07-01", "city": "Binh Thuan", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 85, "start": "2026-03-01", "end": "2026-07-01", "city": "Lam Dong", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "include Dak Nong", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 86, "start": "2026-04-01", "end": "2026-04-01", "city": "HCM", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "Lễ Hội Sông Nước", "fn": "DirO", "stage": "Event", "days": 30}, {"row": 87, "start": "2026-05-01", "end": "2026-05-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "Lễ Hội Ẩm Thực", "fn": "DirO", "stage": "Event", "days": 31}, {"row": 88, "start": "2026-06-01", "end": "2026-06-01", "city": "HCM", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "Du Lịch Biển - to be confirmed", "fn": "DirO", "stage": "Event", "days": 30}, {"row": 89, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Weekday x Hour x L2 Cate x Location", "fn": "Demand", "stage": "Learning", "days": 28}, {"row": 90, "start": "2026-03-01", "end": "2026-03-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Weekday x Hour x L2 Cate x Location", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 91, "start": "2026-04-01", "end": "2026-12-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Platform targeted push", "fn": "Demand", "stage": "Launching", "days": 245}, {"row": 92, "start": "2026-03-01", "end": "2026-03-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Store tag integration to collection", "fn": "Product", "stage": "Launching", "days": 31}, {"row": 93, "start": "2026-03-01", "end": "2026-04-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "User tag - realtime features", "fn": "Product", "stage": "Launching", "days": 32}, {"row": 94, "start": "2026-03-01", "end": "2026-04-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Voucher - distance based", "fn": "Product", "stage": "Launching", "days": 32}, {"row": 95, "start": "2026-01-01", "end": "2026-03-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "User tag - User Age ingest", "fn": "Product", "stage": "Launching", "days": 60}, {"row": 96, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Market Penetration", "sub": "OW", "desc": "Buyer Profile and Behaviours", "fn": "Demand", "stage": "Learning", "days": 1}, {"row": 97, "start": "2026-03-01", "end": "2026-12-01", "city": "VN", "proj": "Market Penetration", "sub": "OW", "desc": "Targeted Push", "fn": "Demand", "stage": "Order Push", "days": 276}, {"row": 98, "start": "2026-05-01", "end": "2026-08-01", "city": "VN", "proj": "Market Penetration", "sub": "OW", "desc": "Targeted Push - Buyer Movement", "fn": "Demand", "stage": "Order Push", "days": 93}, {"row": 99, "start": "2026-02-01", "end": "2026-03-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Non Food Fee impact learning", "fn": "BnP", "stage": "Learning", "days": 29}, {"row": 100, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Demand Recovery", "fn": "Demand", "stage": "Learning", "days": 1}, {"row": 101, "start": "2026-02-01", "end": "2026-03-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Platform Health Recovery", "fn": "Platform Health", "stage": "Learning", "days": 29}, {"row": 102, "start": "2026-02-01", "end": "2026-03-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Driver Recovery", "fn": "Driver", "stage": "Learning", "days": 29}, {"row": 103, "start": "2026-02-01", "end": "2026-03-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Merchant Assortment Recovery", "fn": "Ops", "stage": "Learning", "days": 29}];
 
 // ── GANTT BASE DATA ──
-var BASE = [
+const BASE = [
   {id:'AFP1_VN',s:'2025-04-01',e:'2025-04-01',city:'VN',zone:'VN',proj:'Affiliate',sub:'Phase 1',stage:'',fn:'Demand',desc:'',status:'Not Started',p:0,prio:'Medium',owner:'',note:''},
   {id:'AFP4_VN',s:'2025-09-01',e:'2025-09-01',city:'VN',zone:'VN',proj:'Affiliate',sub:'Phase 42',stage:'',fn:'Demand',desc:'',status:'Not Started',p:0,prio:'Medium',owner:'',note:''},
   {id:'CHNL_VN_ĂNR',s:'2025-05-01',e:'2025-05-01',city:'VN',zone:'ăn ngon rẻ',proj:'Cheap Meal',sub:'Newly Launch',stage:'',fn:'Demand',desc:'ăn ngon rẻ',status:'Not Started',p:0,prio:'Medium',owner:'',note:''},
@@ -2677,7 +2907,7 @@ Return ONLY valid JSON: {"initiative_id":"...","progress":null or 0-100,"status"
 
 <script>
 /* ── SHARED DATA ── */
-var BASE = [
+const BASE = [
   {id:'AFP1_VN',s:'2025-04-01',e:'2025-04-01',city:'VN',zone:'VN',proj:'Affiliate',sub:'Phase 1',stage:'',fn:'Demand',desc:'',status:'Not Started',p:0,prio:'Medium',owner:'',note:''},
   {id:'AFP4_VN',s:'2025-09-01',e:'2025-09-01',city:'VN',zone:'VN',proj:'Affiliate',sub:'Phase 42',stage:'',fn:'Demand',desc:'',status:'Not Started',p:0,prio:'Medium',owner:'',note:''},
   {id:'CHNL_VN_ĂNR',s:'2025-05-01',e:'2025-05-01',city:'VN',zone:'ăn ngon rẻ',proj:'Cheap Meal',sub:'Newly Launch',stage:'',fn:'Demand',desc:'ăn ngon rẻ',status:'Not Started',p:0,prio:'Medium',owner:'',note:''},
@@ -2774,8 +3004,8 @@ var BASE = [
 ];
 
 /* ── HUB SHELL ── */
-var HUB_DAY = 'sfupd_' + new Date().toISOString().slice(0,10);
-var hubCount = parseInt(localStorage.getItem(HUB_DAY)||'0');
+const HUB_DAY = 'sfupd_' + new Date().toISOString().slice(0,10);
+let hubCount = parseInt(localStorage.getItem(HUB_DAY)||'0');
 function hubUpdateCount(){ document.getElementById('hub-save-lbl').textContent = hubCount + ' updated today'; }
 hubUpdateCount();
 
@@ -2809,7 +3039,7 @@ function showToast(m){ hubShowToast(m); }
 // zone = the specific area/campaign (HN1, HN2, whole city, campaign name)
 // Phases on the same zone+city row must be NON-OVERLAPPING and sorted by start
 // ─────────────────────────────────────────────────────
-var BASE = [
+const BASE = [
   {id:'AFP1_VN',s:'2025-04-01',e:'2025-04-01',city:'VN',zone:'VN',proj:'Affiliate',sub:'Phase 1',stage:'',fn:'Demand',desc:'',status:'Not Started',p:0,prio:'Medium',owner:'',note:''},
   {id:'AFP4_VN',s:'2025-09-01',e:'2025-09-01',city:'VN',zone:'VN',proj:'Affiliate',sub:'Phase 42',stage:'',fn:'Demand',desc:'',status:'Not Started',p:0,prio:'Medium',owner:'',note:''},
   {id:'CHNL_VN_ĂNR',s:'2025-05-01',e:'2025-05-01',city:'VN',zone:'ăn ngon rẻ',proj:'Cheap Meal',sub:'Newly Launch',stage:'',fn:'Demand',desc:'ăn ngon rẻ',status:'Not Started',p:0,prio:'Medium',owner:'',note:''},
@@ -2905,27 +3135,27 @@ var BASE = [
   {id:'PUT_VN_LEA_MAR',s:'2026-02-01',e:'2026-03-01',city:'VN',zone:'Merchant Assortment Recovery',proj:'Public Holiday',sub:'Tet',stage:'Learning',fn:'Ops',desc:'Merchant Assortment Recovery',status:'Not Started',p:0,prio:'Medium',owner:'',note:''}
 ];
 
-var data = JSON.parse(localStorage.getItem('sfg4')||'null') || BASE.map(d=>({...d}));
-var sv = () => localStorage.setItem('sfg4', JSON.stringify(data));
+let data = JSON.parse(localStorage.getItem('sfg4')||'null') || BASE.map(d=>({...d}));
+const sv = () => localStorage.setItem('sfg4', JSON.stringify(data));
 
 // ─────────────────────────────────────────────────────
 // TIMELINE
 // ─────────────────────────────────────────────────────
-var MNS=[];
+const MNS=[];
 for(let y=2025;y<=2026;y++)for(let m=0;m<12;m++)
   MNS.push({y,m,key:`${y}-${String(m+1).padStart(2,'0')}`,lb:new Date(y,m,1).toLocaleString('en',{month:'short'})});
-var MW=88, TOD=new Date(), TODK=`${TOD.getFullYear()}-${String(TOD.getMonth()+1).padStart(2,'0')}`, TIDX=MNS.findIndex(m=>m.key===TODK);
+const MW=88, TOD=new Date(), TODK=`${TOD.getFullYear()}-${String(TOD.getMonth()+1).padStart(2,'0')}`, TIDX=MNS.findIndex(m=>m.key===TODK);
 
-var dx  = s=>{const d=new Date(s),i=MNS.findIndex(m=>m.y===d.getFullYear()&&m.m===d.getMonth());return i<0?0:(i+(d.getDate()-1)/new Date(d.getFullYear(),d.getMonth()+1,0).getDate())*MW;};
-var dxE = s=>{const d=new Date(s),i=MNS.findIndex(m=>m.y===d.getFullYear()&&m.m===d.getMonth());return i<0?0:(i+d.getDate()/new Date(d.getFullYear(),d.getMonth()+1,0).getDate())*MW;};
+const dx  = s=>{const d=new Date(s),i=MNS.findIndex(m=>m.y===d.getFullYear()&&m.m===d.getMonth());return i<0?0:(i+(d.getDate()-1)/new Date(d.getFullYear(),d.getMonth()+1,0).getDate())*MW;};
+const dxE = s=>{const d=new Date(s),i=MNS.findIndex(m=>m.y===d.getFullYear()&&m.m===d.getMonth());return i<0?0:(i+d.getDate()/new Date(d.getFullYear(),d.getMonth()+1,0).getDate())*MW;};
 
 // ─────────────────────────────────────────────────────
 // COLOURS
 // ─────────────────────────────────────────────────────
-var SC={'Not Started':'#94a3b8','In Progress':'#2563eb','On Track':'#059669','At Risk':'#d97706','Delayed':'#dc2626','Done':'#10b981','On Hold':'#6b7280'};
-var SI={'Not Started':'○','In Progress':'◉','On Track':'●','At Risk':'⚠','Delayed':'✕','Done':'✓','On Hold':'⏸'};
-var TC=fn=>({Demand:'#6366f1',Driver:'#10b981',Product:'#0ea5e9',BD:'#f59e0b',Ops:'#f97316',Marketing:'#ec4899'}[fn]||'#94a3b8');
-var STC=st=>{
+const SC={'Not Started':'#94a3b8','In Progress':'#2563eb','On Track':'#059669','At Risk':'#d97706','Delayed':'#dc2626','Done':'#10b981','On Hold':'#6b7280'};
+const SI={'Not Started':'○','In Progress':'◉','On Track':'●','At Risk':'⚠','Delayed':'✕','Done':'✓','On Hold':'⏸'};
+const TC=fn=>({Demand:'#6366f1',Driver:'#10b981',Product:'#0ea5e9',BD:'#f59e0b',Ops:'#f97316',Marketing:'#ec4899'}[fn]||'#94a3b8');
+const STC=st=>{
   if(st==='Acquisition')     return{bg:'#f59e0b',tx:'#92400e'};
   if(st==='Order Push')      return{bg:'#6366f1',tx:'#312e81'};
   if(st==='COMMANDO')        return{bg:'#ef4444',tx:'#7f1d1d'};
@@ -2953,7 +3183,7 @@ function popSels(){
   renderMonthPills();
 }
 function applyF(){fP=document.getElementById('fP').value;fS=document.getElementById('fS').value;fT=document.getElementById('fT').value;fCity=document.getElementById('fCity').value;render();}
-var getF=()=>data.filter(d=>{
+const getF=()=>data.filter(d=>{
   if(fP&&d.proj!==fP)return false;
   if(fS&&d.sub!==fS)return false;
   if(fT&&d.fn!==fT)return false;
@@ -2996,7 +3226,7 @@ function group(items){
 // ─────────────────────────────────────────────────────
 // EXPAND STATE
 // ─────────────────────────────────────────────────────
-var xP=new Set(), xS=new Set();
+const xP=new Set(), xS=new Set();
 
 // ─────────────────────────────────────────────────────
 // STATUS STRIP
@@ -3062,8 +3292,8 @@ function clearMonths(){fMonths.clear();renderMonthPills();render();}
 
 function worst(ss){for(const s of['Delayed','At Risk','In Progress','On Track','Not Started','On Hold','Done'])if(ss.includes(s))return s;return ss[0]||'Not Started';}
 function fmtD(s){return s?new Date(s).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'}):'—';}
-var esc=s=>(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-var totalW=()=>MNS.length*MW;
+const esc=s=>(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+const totalW=()=>MNS.length*MW;
 
 function tbg(){return`<div class="tbg">${MNS.map(m=>{const q=m.m<3?1:m.m<6?2:m.m<9?3:4;return`<div class="tc${m.key===TODK?' cur':''}${q%2===0?' qe':''}"></div>`;}).join('')}</div>`;}
 
@@ -3278,7 +3508,7 @@ function saveD(){
 }
 
 // TOOLTIP
-var tip=document.getElementById('tipEl');
+const tip=document.getElementById('tipEl');
 function tipAgg(e,o){
   tip.innerHTML=`<div class="tt">${o.proj} — ${o.sub}</div>
     <div class="tr"><span class="tk">Status</span><span class="tv">${SI[o.status]||''} ${o.status}</span></div>
@@ -3327,13 +3557,13 @@ setTimeout(()=>{if(TIDX>=0)document.getElementById('tp').scrollLeft=Math.max(0,(
 // ─────────────────────────────────────────────────────
 // BASE from shared
 
-var data = JSON.parse(localStorage.getItem('sfg4')||'null') || BASE.map(d=>({...d}));
-var sv = () => localStorage.setItem('sfg4', JSON.stringify(data));
+let data = JSON.parse(localStorage.getItem('sfg4')||'null') || BASE.map(d=>({...d}));
+const sv = () => localStorage.setItem('sfg4', JSON.stringify(data));
 
 // Track today's update count
-var TODAY_KEY = 'sfupd_' + new Date().toISOString().slice(0,10);
-var todayCount = parseInt(localStorage.getItem(TODAY_KEY)||'0');
-var updateCount = () => {
+const TODAY_KEY = 'sfupd_' + new Date().toISOString().slice(0,10);
+let todayCount = parseInt(localStorage.getItem(TODAY_KEY)||'0');
+const updateCount = () => {
   document.getElementById('saveCount').textContent = todayCount + ' updated today';
 };
 updateCount();
@@ -3341,7 +3571,7 @@ updateCount();
 // ─────────────────────────────────────────────────────
 // STATUS CONFIG
 // ─────────────────────────────────────────────────────
-var SC = {'Not Started':'#94a3b8','In Progress':'#2563eb','On Track':'#059669','At Risk':'#d97706','Delayed':'#dc2626','Done':'#10b981','On Hold':'#6b7280'};
+const SC = {'Not Started':'#94a3b8','In Progress':'#2563eb','On Track':'#059669','At Risk':'#d97706','Delayed':'#dc2626','Done':'#10b981','On Hold':'#6b7280'};
 
 // ─────────────────────────────────────────────────────
 // QUICK FORM — build initiative list
@@ -3587,7 +3817,7 @@ function showToast(m) {
 // ─────────────────────────────────────────────────────
 // AUTOCOMPLETE
 // ─────────────────────────────────────────────────────
-var STAGE_COLORS = {
+const STAGE_COLORS = {
   'Acquisition':'#f59e0b','Order Push':'#6366f1','COMMANDO':'#ef4444',
   'WP Cashback Trial':'#f59e0b','WP CB Customized':'#f97316',
   'Launch':'#10b981','Manual':'#0ea5e9','API':'#8b5cf6',
@@ -3595,7 +3825,7 @@ var STAGE_COLORS = {
 };
 
 // Build searchable index: id + all keywords from zone, city, proj, stage
-var IDX = data.map(d => ({
+const IDX = data.map(d => ({
   d,
   tokens: [
     d.id.toLowerCase(),
@@ -3735,7 +3965,7 @@ filterList('');
 </script>
 <script>
 // ── SOURCE OF TRUTH FROM EXCEL ──
-var EXCEL_TRUTH = [{"row": 2, "start": "2025-04-01", "end": null, "city": "VN", "proj": "Affiliate", "sub": "Phase 1", "desc": "", "fn": "Demand", "stage": "", "days": null}, {"row": 3, "start": "2025-09-01", "end": null, "city": "VN", "proj": "Affiliate", "sub": "Phase 42", "desc": "", "fn": "Demand", "stage": "", "days": null}, {"row": 4, "start": "2025-05-01", "end": null, "city": "VN", "proj": "Cheap Meal", "sub": "Newly Launch", "desc": "ăn ngon rẻ", "fn": "Demand", "stage": "", "days": null}, {"row": 5, "start": "2025-05-01", "end": null, "city": "VN", "proj": "Prepaid Deals", "sub": "Newly Launch", "desc": "later demand", "fn": "Demand", "stage": "", "days": null}, {"row": 7, "start": "2025-07-01", "end": null, "city": "VN", "proj": "Short Hub", "sub": "Newly Launch", "desc": "new type of hub for driver", "fn": "Driver", "stage": "", "days": null}, {"row": 11, "start": "2025-11-01", "end": null, "city": "Hai Phong", "proj": "Captain Hub", "sub": "Open in Hai Phong", "desc": "new type of hub for driver", "fn": "Driver", "stage": "", "days": null}, {"row": 14, "start": "2026-02-01", "end": null, "city": "Ha Noi", "proj": "Captain Hub", "sub": "Open in Ha Noi", "desc": "new type of hub for driver", "fn": "Driver", "stage": "", "days": null}, {"row": 15, "start": "2026-02-01", "end": null, "city": "VN", "proj": "Zalo OA", "sub": "Manual", "desc": "roll out for merchant", "fn": "Product", "stage": "", "days": null}, {"row": 16, "start": "2026-03-01", "end": null, "city": "VN", "proj": "Zalo OA", "sub": "API", "desc": "automate workflow", "fn": "Product", "stage": "", "days": null}, {"row": 17, "start": "2026-04-01", "end": null, "city": "VN", "proj": "Short Hub", "sub": "Order Tag in Assignment", "desc": "easy order tag", "fn": "", "stage": "", "days": null}, {"row": 18, "start": "2026-05-01", "end": null, "city": "VN", "proj": "Self Pick Up", "sub": "Newly Launch", "desc": "new type of delivery", "fn": "Demand", "stage": "", "days": null}, {"row": 19, "start": "2026-05-01", "end": null, "city": "VN", "proj": "Prepaid Deals", "sub": "Standalone App Entrance", "desc": "open new entrance on standalone app", "fn": "Demand", "stage": "", "days": null}, {"row": 20, "start": "2026-02-01", "end": null, "city": "VN", "proj": "Rating & Review", "sub": "Short Film", "desc": "", "fn": "", "stage": "", "days": null}, {"row": 23, "start": "2026-03-01", "end": "2026-03-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN1BachMai ; HN1CauGiay", "fn": "BD", "stage": "Acquisition", "days": 31}, {"row": 24, "start": "2026-04-01", "end": "2026-04-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN2DongDa ; HN2HoanKiem ; HN2CuaNam", "fn": "BD", "stage": "Acquisition", "days": 30}, {"row": 25, "start": "2026-05-01", "end": "2026-05-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN3NghiaDo ; HN3Lang ; HN3HaiBaTrung ; HN3NgocHa", "fn": "BD", "stage": "Acquisition", "days": 31}, {"row": 26, "start": "2026-06-01", "end": "2026-06-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN4VinhTuy ; HN4BaDinh ; HN4KimLien ; HN4GiangVo ; HN4ThanhXuan ; HN4TuongMai ; HN4VanMieu ; HN4HongHa", "fn": "BD", "stage": "Acquisition", "days": 30}, {"row": 27, "start": "2026-04-01", "end": "2026-04-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN1BachMai ; HN1CauGiay", "fn": "Demand", "stage": "Order Push", "days": 31}, {"row": 28, "start": "2026-05-01", "end": "2026-05-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN2DongDa ; HN2HoanKiem ; HN2CuaNam", "fn": "Demand", "stage": "Order Push", "days": 31}, {"row": 29, "start": "2026-06-01", "end": "2026-06-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN3NghiaDo ; HN3Lang ; HN3HaiBaTrung ; HN3NgocHa", "fn": "Demand", "stage": "Order Push", "days": 30}, {"row": 30, "start": "2026-07-01", "end": "2026-07-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN4VinhTuy ; HN4BaDinh ; HN4KimLien ; HN4GiangVo ; HN4ThanhXuan ; HN4TuongMai ; HN4VanMieu ; HN4HongHa", "fn": "Demand", "stage": "Order Push", "days": 31}, {"row": 31, "start": "2026-03-01", "end": "2026-05-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "BD", "stage": "Acquisition", "days": 31}, {"row": 32, "start": "2026-04-01", "end": "2026-07-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "Demand", "stage": "Order Push", "days": 92}, {"row": 33, "start": "2026-03-01", "end": "2026-05-01", "city": "HCM", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "BD", "stage": "Acquisition", "days": 62}, {"row": 34, "start": "2026-04-01", "end": "2026-07-01", "city": "HCM", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "Demand", "stage": "Order Push", "days": 92}, {"row": 35, "start": "2026-03-01", "end": "2026-04-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cashback Trial", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 36, "start": "2026-03-01", "end": "2026-04-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cashback Trial", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 37, "start": "2026-03-01", "end": "2026-04-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cashback Trial", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 38, "start": "2026-03-01", "end": "2026-04-01", "city": "Khanh Hoa", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cashback Trial", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 39, "start": "2026-03-01", "end": "2026-06-01", "city": "Binh Duong", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 93}, {"row": 40, "start": "2026-06-01", "end": "2026-08-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 62}, {"row": 41, "start": "2026-06-01", "end": "2026-08-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 62}, {"row": 42, "start": "2026-06-01", "end": "2026-08-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 62}, {"row": 43, "start": "2026-05-01", "end": "2026-06-01", "city": "Khanh Hoa", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 44, "start": "2026-09-01", "end": "2026-10-01", "city": "Dak Lak", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 31}, {"row": 45, "start": "2026-03-01", "end": "2026-04-01", "city": "Hai Phong", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 46, "start": "2026-05-01", "end": "2026-12-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 47, "start": "2026-05-01", "end": "2026-12-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 48, "start": "2026-05-01", "end": "2026-12-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 49, "start": "2026-07-01", "end": "2026-12-01", "city": "Binh Duong", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 154}, {"row": 50, "start": "2026-07-01", "end": "2026-12-01", "city": "Khanh Hoa", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 154}, {"row": 51, "start": "2026-07-01", "end": "2026-12-01", "city": "Dak Lak", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 154}, {"row": 52, "start": "2026-05-01", "end": "2026-12-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 53, "start": "2026-05-01", "end": "2026-12-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 54, "start": "2026-05-01", "end": "2026-12-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 55, "start": "2026-05-01", "end": "2026-12-01", "city": "Hai Phong", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 56, "start": "2026-05-01", "end": "2026-12-01", "city": "Hue", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 57, "start": "2026-05-01", "end": "2026-12-01", "city": "Binh Dinh", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 58, "start": "2026-09-01", "end": "2026-12-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "POS LEADS", "fn": "BD", "stage": "Acquisition", "days": 92}, {"row": 59, "start": "2026-09-01", "end": "2026-12-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "POS LEADS", "fn": "BD", "stage": "Acquisition", "days": 92}, {"row": 60, "start": "2026-09-01", "end": "2026-12-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "POS LEADS", "fn": "BD", "stage": "Acquisition", "days": 92}, {"row": 61, "start": "2026-03-01", "end": "2026-03-01", "city": "Da Nang", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 62, "start": "2026-03-01", "end": "2026-03-01", "city": "Binh Duong", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 63, "start": "2026-03-01", "end": "2026-03-01", "city": "Khanh Hoa", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 64, "start": "2026-04-01", "end": "2026-04-01", "city": "Dong Nai", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 65, "start": "2026-04-01", "end": "2026-04-01", "city": "Hue", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 66, "start": "2026-04-01", "end": "2026-04-01", "city": "Can Tho", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 67, "start": "2026-05-01", "end": "2026-04-01", "city": "HCM", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 68, "start": "2026-04-01", "end": "2026-04-01", "city": "Hai Phong", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Increase % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 69, "start": "2026-04-01", "end": "2026-04-01", "city": "Binh Dinh", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Increase % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 70, "start": "2026-05-01", "end": "2026-05-01", "city": "Ha Noi", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Increase % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 71, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Order Tag", "fn": "Product", "stage": "Construction", "days": 28}, {"row": 73, "start": "2026-01-01", "end": "2026-01-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Easy Order Tag", "fn": "Driver", "stage": "Definition", "days": 31}, {"row": 74, "start": "2026-03-01", "end": "2026-03-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Integration to Assignment", "fn": "Product", "stage": "Integration", "days": 31}, {"row": 75, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Short Hub Only Stage logic", "fn": "Product", "stage": "Enhancement", "days": 28}, {"row": 76, "start": "2025-10-01", "end": "2025-10-01", "city": "Da Nang", "proj": "Market Penetration", "sub": "Order Density", "desc": "Pick/Drop payout", "fn": "Driver", "stage": "Launching", "days": 31}, {"row": 77, "start": "2026-06-01", "end": "2026-06-01", "city": "Ha Noi", "proj": "Market Penetration", "sub": "Order Density", "desc": "Pick/Drop payout", "fn": "Driver", "stage": "Launching", "days": 30}, {"row": 78, "start": "2026-06-01", "end": "2026-06-01", "city": "HCM", "proj": "Market Penetration", "sub": "Order Density", "desc": "Pick/Drop payout", "fn": "Driver", "stage": "Launching", "days": 30}, {"row": 79, "start": "2026-03-01", "end": "2026-07-01", "city": "Hai Phong", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "DirO", "stage": "Sign MOU", "days": 31}, {"row": 80, "start": "2026-03-01", "end": "2026-07-01", "city": "Hue", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 81, "start": "2026-03-01", "end": "2026-07-01", "city": "Khanh Hoa", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "include Ninh Thuan", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 82, "start": "2026-03-01", "end": "2026-07-01", "city": "Binh Dinh", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "include Gia Lai", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 83, "start": "2026-03-01", "end": "2026-07-01", "city": "Dong Nai", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "include Binh Phuoc", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 84, "start": "2026-03-01", "end": "2026-07-01", "city": "Binh Thuan", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 85, "start": "2026-03-01", "end": "2026-07-01", "city": "Lam Dong", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "include Dak Nong", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 86, "start": "2026-04-01", "end": "2026-04-01", "city": "HCM", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "Lễ Hội Sông Nước", "fn": "DirO", "stage": "Event", "days": 30}, {"row": 87, "start": "2026-05-01", "end": "2026-05-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "Lễ Hội Ẩm Thực", "fn": "DirO", "stage": "Event", "days": 31}, {"row": 88, "start": "2026-06-01", "end": "2026-06-01", "city": "HCM", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "Du Lịch Biển - to be confirmed", "fn": "DirO", "stage": "Event", "days": 30}, {"row": 89, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Weekday x Hour x L2 Cate x Location", "fn": "Demand", "stage": "Learning", "days": 28}, {"row": 90, "start": "2026-03-01", "end": "2026-03-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Weekday x Hour x L2 Cate x Location", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 91, "start": "2026-04-01", "end": "2026-12-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Platform targeted push", "fn": "Demand", "stage": "Launching", "days": 245}, {"row": 92, "start": "2026-03-01", "end": "2026-03-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Store tag integration to collection", "fn": "Product", "stage": "Launching", "days": 31}, {"row": 93, "start": "2026-03-01", "end": "2026-04-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "User tag - realtime features", "fn": "Product", "stage": "Launching", "days": 32}, {"row": 94, "start": "2026-03-01", "end": "2026-04-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Voucher - distance based", "fn": "Product", "stage": "Launching", "days": 32}, {"row": 95, "start": "2026-01-01", "end": "2026-03-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "User tag - User Age ingest", "fn": "Product", "stage": "Launching", "days": 60}, {"row": 96, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Market Penetration", "sub": "OW", "desc": "Buyer Profile and Behaviours", "fn": "Demand", "stage": "Learning", "days": 1}, {"row": 97, "start": "2026-03-01", "end": "2026-12-01", "city": "VN", "proj": "Market Penetration", "sub": "OW", "desc": "Targeted Push", "fn": "Demand", "stage": "Order Push", "days": 276}, {"row": 98, "start": "2026-05-01", "end": "2026-08-01", "city": "VN", "proj": "Market Penetration", "sub": "OW", "desc": "Targeted Push - Buyer Movement", "fn": "Demand", "stage": "Order Push", "days": 93}, {"row": 99, "start": "2026-02-01", "end": "2026-03-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Non Food Fee impact learning", "fn": "BnP", "stage": "Learning", "days": 29}, {"row": 100, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Demand Recovery", "fn": "Demand", "stage": "Learning", "days": 1}, {"row": 101, "start": "2026-02-01", "end": "2026-03-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Platform Health Recovery", "fn": "Platform Health", "stage": "Learning", "days": 29}, {"row": 102, "start": "2026-02-01", "end": "2026-03-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Driver Recovery", "fn": "Driver", "stage": "Learning", "days": 29}, {"row": 103, "start": "2026-02-01", "end": "2026-03-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Merchant Assortment Recovery", "fn": "Ops", "stage": "Learning", "days": 29}];
+const EXCEL_TRUTH = [{"row": 2, "start": "2025-04-01", "end": null, "city": "VN", "proj": "Affiliate", "sub": "Phase 1", "desc": "", "fn": "Demand", "stage": "", "days": null}, {"row": 3, "start": "2025-09-01", "end": null, "city": "VN", "proj": "Affiliate", "sub": "Phase 42", "desc": "", "fn": "Demand", "stage": "", "days": null}, {"row": 4, "start": "2025-05-01", "end": null, "city": "VN", "proj": "Cheap Meal", "sub": "Newly Launch", "desc": "ăn ngon rẻ", "fn": "Demand", "stage": "", "days": null}, {"row": 5, "start": "2025-05-01", "end": null, "city": "VN", "proj": "Prepaid Deals", "sub": "Newly Launch", "desc": "later demand", "fn": "Demand", "stage": "", "days": null}, {"row": 7, "start": "2025-07-01", "end": null, "city": "VN", "proj": "Short Hub", "sub": "Newly Launch", "desc": "new type of hub for driver", "fn": "Driver", "stage": "", "days": null}, {"row": 11, "start": "2025-11-01", "end": null, "city": "Hai Phong", "proj": "Captain Hub", "sub": "Open in Hai Phong", "desc": "new type of hub for driver", "fn": "Driver", "stage": "", "days": null}, {"row": 14, "start": "2026-02-01", "end": null, "city": "Ha Noi", "proj": "Captain Hub", "sub": "Open in Ha Noi", "desc": "new type of hub for driver", "fn": "Driver", "stage": "", "days": null}, {"row": 15, "start": "2026-02-01", "end": null, "city": "VN", "proj": "Zalo OA", "sub": "Manual", "desc": "roll out for merchant", "fn": "Product", "stage": "", "days": null}, {"row": 16, "start": "2026-03-01", "end": null, "city": "VN", "proj": "Zalo OA", "sub": "API", "desc": "automate workflow", "fn": "Product", "stage": "", "days": null}, {"row": 17, "start": "2026-04-01", "end": null, "city": "VN", "proj": "Short Hub", "sub": "Order Tag in Assignment", "desc": "easy order tag", "fn": "", "stage": "", "days": null}, {"row": 18, "start": "2026-05-01", "end": null, "city": "VN", "proj": "Self Pick Up", "sub": "Newly Launch", "desc": "new type of delivery", "fn": "Demand", "stage": "", "days": null}, {"row": 19, "start": "2026-05-01", "end": null, "city": "VN", "proj": "Prepaid Deals", "sub": "Standalone App Entrance", "desc": "open new entrance on standalone app", "fn": "Demand", "stage": "", "days": null}, {"row": 20, "start": "2026-02-01", "end": null, "city": "VN", "proj": "Rating & Review", "sub": "Short Film", "desc": "", "fn": "", "stage": "", "days": null}, {"row": 23, "start": "2026-03-01", "end": "2026-03-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN1BachMai ; HN1CauGiay", "fn": "BD", "stage": "Acquisition", "days": 31}, {"row": 24, "start": "2026-04-01", "end": "2026-04-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN2DongDa ; HN2HoanKiem ; HN2CuaNam", "fn": "BD", "stage": "Acquisition", "days": 30}, {"row": 25, "start": "2026-05-01", "end": "2026-05-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN3NghiaDo ; HN3Lang ; HN3HaiBaTrung ; HN3NgocHa", "fn": "BD", "stage": "Acquisition", "days": 31}, {"row": 26, "start": "2026-06-01", "end": "2026-06-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN4VinhTuy ; HN4BaDinh ; HN4KimLien ; HN4GiangVo ; HN4ThanhXuan ; HN4TuongMai ; HN4VanMieu ; HN4HongHa", "fn": "BD", "stage": "Acquisition", "days": 30}, {"row": 27, "start": "2026-04-01", "end": "2026-04-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN1BachMai ; HN1CauGiay", "fn": "Demand", "stage": "Order Push", "days": 31}, {"row": 28, "start": "2026-05-01", "end": "2026-05-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN2DongDa ; HN2HoanKiem ; HN2CuaNam", "fn": "Demand", "stage": "Order Push", "days": 31}, {"row": 29, "start": "2026-06-01", "end": "2026-06-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN3NghiaDo ; HN3Lang ; HN3HaiBaTrung ; HN3NgocHa", "fn": "Demand", "stage": "Order Push", "days": 30}, {"row": 30, "start": "2026-07-01", "end": "2026-07-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "HN4VinhTuy ; HN4BaDinh ; HN4KimLien ; HN4GiangVo ; HN4ThanhXuan ; HN4TuongMai ; HN4VanMieu ; HN4HongHa", "fn": "Demand", "stage": "Order Push", "days": 31}, {"row": 31, "start": "2026-03-01", "end": "2026-05-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "BD", "stage": "Acquisition", "days": 31}, {"row": 32, "start": "2026-04-01", "end": "2026-07-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "Demand", "stage": "Order Push", "days": 92}, {"row": 33, "start": "2026-03-01", "end": "2026-05-01", "city": "HCM", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "BD", "stage": "Acquisition", "days": 62}, {"row": 34, "start": "2026-04-01", "end": "2026-07-01", "city": "HCM", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "Demand", "stage": "Order Push", "days": 92}, {"row": 35, "start": "2026-03-01", "end": "2026-04-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cashback Trial", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 36, "start": "2026-03-01", "end": "2026-04-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cashback Trial", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 37, "start": "2026-03-01", "end": "2026-04-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cashback Trial", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 38, "start": "2026-03-01", "end": "2026-04-01", "city": "Khanh Hoa", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cashback Trial", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 39, "start": "2026-03-01", "end": "2026-06-01", "city": "Binh Duong", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 93}, {"row": 40, "start": "2026-06-01", "end": "2026-08-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 62}, {"row": 41, "start": "2026-06-01", "end": "2026-08-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 62}, {"row": 42, "start": "2026-06-01", "end": "2026-08-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 62}, {"row": 43, "start": "2026-05-01", "end": "2026-06-01", "city": "Khanh Hoa", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 44, "start": "2026-09-01", "end": "2026-10-01", "city": "Dak Lak", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 31}, {"row": 45, "start": "2026-03-01", "end": "2026-04-01", "city": "Hai Phong", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "COMMANDO", "fn": "BD", "stage": "Acquisition", "days": 32}, {"row": 46, "start": "2026-05-01", "end": "2026-12-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 47, "start": "2026-05-01", "end": "2026-12-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 48, "start": "2026-05-01", "end": "2026-12-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 49, "start": "2026-07-01", "end": "2026-12-01", "city": "Binh Duong", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 154}, {"row": 50, "start": "2026-07-01", "end": "2026-12-01", "city": "Khanh Hoa", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 154}, {"row": 51, "start": "2026-07-01", "end": "2026-12-01", "city": "Dak Lak", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "WP Cash Back customized", "fn": "BD", "stage": "Acquisition", "days": 154}, {"row": 52, "start": "2026-05-01", "end": "2026-12-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 53, "start": "2026-05-01", "end": "2026-12-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 54, "start": "2026-05-01", "end": "2026-12-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 55, "start": "2026-05-01", "end": "2026-12-01", "city": "Hai Phong", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 56, "start": "2026-05-01", "end": "2026-12-01", "city": "Hue", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 57, "start": "2026-05-01", "end": "2026-12-01", "city": "Binh Dinh", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "FREELANCE", "fn": "BD", "stage": "Acquisition", "days": 215}, {"row": 58, "start": "2026-09-01", "end": "2026-12-01", "city": "HCM", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "POS LEADS", "fn": "BD", "stage": "Acquisition", "days": 92}, {"row": 59, "start": "2026-09-01", "end": "2026-12-01", "city": "Ha Noi", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "POS LEADS", "fn": "BD", "stage": "Acquisition", "days": 92}, {"row": 60, "start": "2026-09-01", "end": "2026-12-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Merchant Assortment", "desc": "POS LEADS", "fn": "BD", "stage": "Acquisition", "days": 92}, {"row": 61, "start": "2026-03-01", "end": "2026-03-01", "city": "Da Nang", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 62, "start": "2026-03-01", "end": "2026-03-01", "city": "Binh Duong", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 63, "start": "2026-03-01", "end": "2026-03-01", "city": "Khanh Hoa", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 64, "start": "2026-04-01", "end": "2026-04-01", "city": "Dong Nai", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 65, "start": "2026-04-01", "end": "2026-04-01", "city": "Hue", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 66, "start": "2026-04-01", "end": "2026-04-01", "city": "Can Tho", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 67, "start": "2026-05-01", "end": "2026-04-01", "city": "HCM", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Decrease % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 68, "start": "2026-04-01", "end": "2026-04-01", "city": "Hai Phong", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Increase % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 69, "start": "2026-04-01", "end": "2026-04-01", "city": "Binh Dinh", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Increase % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 30}, {"row": 70, "start": "2026-05-01", "end": "2026-05-01", "city": "Ha Noi", "proj": "Market Penetration", "sub": "Buyer Non Food Fee", "desc": "Increase % NFF/FV", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 71, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Order Tag", "fn": "Product", "stage": "Construction", "days": 28}, {"row": 73, "start": "2026-01-01", "end": "2026-01-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Easy Order Tag", "fn": "Driver", "stage": "Definition", "days": 31}, {"row": 74, "start": "2026-03-01", "end": "2026-03-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Integration to Assignment", "fn": "Product", "stage": "Integration", "days": 31}, {"row": 75, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Short Hub Only Stage logic", "fn": "Product", "stage": "Enhancement", "days": 28}, {"row": 76, "start": "2025-10-01", "end": "2025-10-01", "city": "Da Nang", "proj": "Market Penetration", "sub": "Order Density", "desc": "Pick/Drop payout", "fn": "Driver", "stage": "Launching", "days": 31}, {"row": 77, "start": "2026-06-01", "end": "2026-06-01", "city": "Ha Noi", "proj": "Market Penetration", "sub": "Order Density", "desc": "Pick/Drop payout", "fn": "Driver", "stage": "Launching", "days": 30}, {"row": 78, "start": "2026-06-01", "end": "2026-06-01", "city": "HCM", "proj": "Market Penetration", "sub": "Order Density", "desc": "Pick/Drop payout", "fn": "Driver", "stage": "Launching", "days": 30}, {"row": 79, "start": "2026-03-01", "end": "2026-07-01", "city": "Hai Phong", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "DirO", "stage": "Sign MOU", "days": 31}, {"row": 80, "start": "2026-03-01", "end": "2026-07-01", "city": "Hue", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 81, "start": "2026-03-01", "end": "2026-07-01", "city": "Khanh Hoa", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "include Ninh Thuan", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 82, "start": "2026-03-01", "end": "2026-07-01", "city": "Binh Dinh", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "include Gia Lai", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 83, "start": "2026-03-01", "end": "2026-07-01", "city": "Dong Nai", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "include Binh Phuoc", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 84, "start": "2026-03-01", "end": "2026-07-01", "city": "Binh Thuan", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 85, "start": "2026-03-01", "end": "2026-07-01", "city": "Lam Dong", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "include Dak Nong", "fn": "DirO", "stage": "Sign MOU", "days": 123}, {"row": 86, "start": "2026-04-01", "end": "2026-04-01", "city": "HCM", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "Lễ Hội Sông Nước", "fn": "DirO", "stage": "Event", "days": 30}, {"row": 87, "start": "2026-05-01", "end": "2026-05-01", "city": "Da Nang", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "Lễ Hội Ẩm Thực", "fn": "DirO", "stage": "Event", "days": 31}, {"row": 88, "start": "2026-06-01", "end": "2026-06-01", "city": "HCM", "proj": "Order Coverage", "sub": "Phủ Cam", "desc": "Du Lịch Biển - to be confirmed", "fn": "DirO", "stage": "Event", "days": 30}, {"row": 89, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Weekday x Hour x L2 Cate x Location", "fn": "Demand", "stage": "Learning", "days": 28}, {"row": 90, "start": "2026-03-01", "end": "2026-03-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Weekday x Hour x L2 Cate x Location", "fn": "Demand", "stage": "Testing", "days": 31}, {"row": 91, "start": "2026-04-01", "end": "2026-12-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Platform targeted push", "fn": "Demand", "stage": "Launching", "days": 245}, {"row": 92, "start": "2026-03-01", "end": "2026-03-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Store tag integration to collection", "fn": "Product", "stage": "Launching", "days": 31}, {"row": 93, "start": "2026-03-01", "end": "2026-04-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "User tag - realtime features", "fn": "Product", "stage": "Launching", "days": 32}, {"row": 94, "start": "2026-03-01", "end": "2026-04-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "Voucher - distance based", "fn": "Product", "stage": "Launching", "days": 32}, {"row": 95, "start": "2026-01-01", "end": "2026-03-01", "city": "VN", "proj": "Market Penetration", "sub": "Order Density", "desc": "User tag - User Age ingest", "fn": "Product", "stage": "Launching", "days": 60}, {"row": 96, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Market Penetration", "sub": "OW", "desc": "Buyer Profile and Behaviours", "fn": "Demand", "stage": "Learning", "days": 1}, {"row": 97, "start": "2026-03-01", "end": "2026-12-01", "city": "VN", "proj": "Market Penetration", "sub": "OW", "desc": "Targeted Push", "fn": "Demand", "stage": "Order Push", "days": 276}, {"row": 98, "start": "2026-05-01", "end": "2026-08-01", "city": "VN", "proj": "Market Penetration", "sub": "OW", "desc": "Targeted Push - Buyer Movement", "fn": "Demand", "stage": "Order Push", "days": 93}, {"row": 99, "start": "2026-02-01", "end": "2026-03-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Non Food Fee impact learning", "fn": "BnP", "stage": "Learning", "days": 29}, {"row": 100, "start": "2026-02-01", "end": "2026-02-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Demand Recovery", "fn": "Demand", "stage": "Learning", "days": 1}, {"row": 101, "start": "2026-02-01", "end": "2026-03-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Platform Health Recovery", "fn": "Platform Health", "stage": "Learning", "days": 29}, {"row": 102, "start": "2026-02-01", "end": "2026-03-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Driver Recovery", "fn": "Driver", "stage": "Learning", "days": 29}, {"row": 103, "start": "2026-02-01", "end": "2026-03-01", "city": "VN", "proj": "Public Holiday", "sub": "Tet", "desc": "Merchant Assortment Recovery", "fn": "Ops", "stage": "Learning", "days": 29}];
 
 // ── GANTT BASE DATA ──
 // BASE from shared
@@ -3992,36 +4222,6 @@ function showPhase(i, btn) {
     checkBadge();
   }, 300);
 })();
-
-// ── AUTH ──
-var _cu=[67,68,74,66,74,69,67,5,69,76,94,82,78,69];
-var _cp=[102,64,107,26,25,24,31,30,29];
-function _dk(a,k){return a.map(function(c){return String.fromCharCode(c^k);}).join('');}
-function _loginSubmit(){
-  var u=document.getElementById('li-u').value;
-  var p=document.getElementById('li-p').value;
-  if(u===_dk(_cu,43)&&p===_dk(_cp,43)){
-    sessionStorage.setItem('_sa','1');
-    document.getElementById('login-overlay').style.display='none';
-  } else {
-    document.getElementById('li-err').textContent='Invalid credentials';
-    document.getElementById('li-p').value='';
-  }
-}
-function _forgotPw(e){
-  e.preventDefault();
-  var sub=encodeURIComponent('SF Initiatives Hub - Password Reset Request');
-  var body=encodeURIComponent('Hi,\n\nI have forgotten my password for SF Initiatives Hub and would like to request a reset.\n\nUsername: '+document.getElementById('li-u').value+'\n\nThank you.');
-  window.location.href='mailto:n.hoaianh93@gmail.com?subject='+sub+'&body='+body;
-  var lk=document.getElementById('forgot-link');
-  lk.textContent='Request sent — check your email app';
-  lk.style.color='#059669';
-  lk.style.borderBottom='none';
-  lk.onclick=null;
-}
-document.getElementById('li-u').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('li-p').focus();});
-document.getElementById('li-p').addEventListener('keydown',function(e){if(e.key==='Enter')_loginSubmit();});
-if(sessionStorage.getItem('_sa')==='1'){document.getElementById('login-overlay').style.display='none';}
 </script>
 
 </body>
