@@ -591,6 +591,11 @@ body{background:var(--bg);color:var(--tx);font-family:'Cabinet Grotesk',sans-ser
 /* Toast */
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--green);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:9px 20px;border-radius:100px;opacity:0;transition:all .2s;pointer-events:none;z-index:300;white-space:nowrap}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+/* ── HUB OVERRIDES (must be last to win cascade) ── */
+html,body{height:100%!important;overflow:hidden!important;padding:0!important;margin:0!important;min-height:0!important}
+body{display:flex!important;flex-direction:column!important;font-size:13px}
+.hub-panel .topbar,.hub-panel#panel-gantt .topbar{padding:8px 16px!important;flex-wrap:wrap!important;justify-content:flex-start!important}
+
 /* LOGIN */
 #login-overlay{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;}
 .login-box{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:32px 28px;width:320px;box-shadow:0 8px 40px rgba(79,70,229,.1),0 2px 8px rgba(0,0,0,.08);}
